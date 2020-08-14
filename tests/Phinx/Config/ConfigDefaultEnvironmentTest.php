@@ -18,7 +18,7 @@ class ConfigDefaultEnvironmentTest extends AbstractConfigTest
         // test with the config array
         $configArray = $this->getConfigArray();
         $config = new Config($configArray);
-        $this->assertEquals('testing', $config->getDefaultEnvironment());
+        $this->assertSame('testing', $config->getDefaultEnvironment());
     }
 
     public function testConfigReplacesTokensWithEnvVariables()
@@ -31,11 +31,11 @@ class ConfigDefaultEnvironmentTest extends AbstractConfigTest
         $path = __DIR__ . '/_files';
         $config = Config::fromYaml($path . '/external_variables.yml');
         $env = $config->getEnvironment($config->getDefaultEnvironment());
-        $this->assertEquals('localhost', $env['host']);
-        $this->assertEquals('productionapp', $env['name']);
-        $this->assertEquals('root', $env['user']);
-        $this->assertEquals('ds6xhj1', $env['pass']);
-        $this->assertEquals('1234', $env['port']);
+        $this->assertSame('localhost', $env['host']);
+        $this->assertSame('productionapp', $env['name']);
+        $this->assertSame('root', $env['user']);
+        $this->assertSame('ds6xhj1', $env['pass']);
+        $this->assertSame('1234', $env['port']);
     }
 
     public function testGetDefaultEnvironmentOverridenByEnvButNotSet()

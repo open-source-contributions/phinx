@@ -12,7 +12,7 @@ class LiteralTest extends TestCase
     {
         $str = 'test1';
         $instance = new Literal($str);
-        $this->assertEquals($str, (string)$instance);
+        $this->assertSame($str, (string)$instance);
     }
 
     public function testFrom()
@@ -20,6 +20,6 @@ class LiteralTest extends TestCase
         $str = 'test1';
         $instance = Literal::from($str);
         $this->assertInstanceOf('\Phinx\Util\Literal', $instance);
-        $this->assertEquals($str, (string)$instance);
+        $this->assertSame($str, (string)$instance);
     }
 }

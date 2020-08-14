@@ -144,20 +144,20 @@ class PostgresAdapterTest extends TestCase
 
     public function testQuoteSchemaName()
     {
-        $this->assertEquals('"schema"', $this->adapter->quoteSchemaName('schema'));
-        $this->assertEquals('"schema.schema"', $this->adapter->quoteSchemaName('schema.schema'));
+        $this->assertSame('"schema"', $this->adapter->quoteSchemaName('schema'));
+        $this->assertSame('"schema.schema"', $this->adapter->quoteSchemaName('schema.schema'));
     }
 
     public function testQuoteTableName()
     {
-        $this->assertEquals('"public"."table"', $this->adapter->quoteTableName('table'));
-        $this->assertEquals('"table"."table"', $this->adapter->quoteTableName('table.table'));
+        $this->assertSame('"public"."table"', $this->adapter->quoteTableName('table'));
+        $this->assertSame('"table"."table"', $this->adapter->quoteTableName('table.table'));
     }
 
     public function testQuoteColumnName()
     {
-        $this->assertEquals('"string"', $this->adapter->quoteColumnName('string'));
-        $this->assertEquals('"string.string"', $this->adapter->quoteColumnName('string.string'));
+        $this->assertSame('"string"', $this->adapter->quoteColumnName('string'));
+        $this->assertSame('"string.string"', $this->adapter->quoteColumnName('string.string'));
     }
 
     public function testCreateTable()
@@ -427,7 +427,7 @@ class PostgresAdapterTest extends TestCase
                 'table1'
             )
         );
-        $this->assertEquals('comment1', $rows[0]['description']);
+        $this->assertSame('comment1', $rows[0]['description']);
     }
 
     public function testChangeComment()
@@ -448,7 +448,7 @@ class PostgresAdapterTest extends TestCase
                 'table1'
             )
         );
-        $this->assertEquals('comment2', $rows[0]['description']);
+        $this->assertSame('comment2', $rows[0]['description']);
     }
 
     public function testDropComment()
@@ -518,7 +518,7 @@ class PostgresAdapterTest extends TestCase
         $columns = $this->adapter->getColumns('table1');
         foreach ($columns as $column) {
             if ($column->getName() === 'default_zero') {
-                $this->assertEquals("test", $column->getDefault());
+                $this->assertSame("test", $column->getDefault());
             }
         }
     }
@@ -533,7 +533,7 @@ class PostgresAdapterTest extends TestCase
         foreach ($columns as $column) {
             if ($column->getName() === 'default_zero') {
                 $this->assertNotNull($column->getDefault());
-                $this->assertEquals('0', $column->getDefault());
+                $this->assertSame('0', $column->getDefault());
             }
         }
     }
@@ -550,11 +550,11 @@ class PostgresAdapterTest extends TestCase
         foreach ($columns as $column) {
             if ($column->getName() === 'default_true') {
                 $this->assertNotNull($column->getDefault());
-                $this->assertEquals('true', $column->getDefault());
+                $this->assertSame('true', $column->getDefault());
             }
             if ($column->getName() === 'default_false') {
                 $this->assertNotNull($column->getDefault());
-                $this->assertEquals('false', $column->getDefault());
+                $this->assertSame('false', $column->getDefault());
             }
             if ($column->getName() === 'default_null') {
                 $this->assertNull($column->getDefault());
@@ -637,7 +637,7 @@ class PostgresAdapterTest extends TestCase
         foreach ($columns as $column) {
             if ($column->getName() === 'default_ts') {
                 $this->assertNotNull($column->getDefault());
-                $this->assertEquals('now()', (string)$column->getDefault());
+                $this->assertSame('now()', (string)$column->getDefault());
             }
         }
     }
@@ -655,7 +655,7 @@ class PostgresAdapterTest extends TestCase
         $columns = $this->adapter->getColumns('citable');
         foreach ($columns as $column) {
             if ($column->getName() === 'insensitive') {
-                $this->assertEquals(
+                $this->assertSame(
                     'citext',
                     (string)$column->getType(),
                     'column: ' . $column->getName()
@@ -687,7 +687,7 @@ class PostgresAdapterTest extends TestCase
             AND cols.column_name = \'email\''
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $comment,
             $row['column_comment'],
             'The column comment was not set when you used addColumn()'
@@ -705,13 +705,13 @@ class PostgresAdapterTest extends TestCase
         $columns = $this->adapter->getColumns('table1');
         foreach ($columns as $column) {
             if ($column->getName() === 'number') {
-                $this->assertEquals("10", $column->getPrecision());
-                $this->assertEquals("2", $column->getScale());
+                $this->assertSame("10", $column->getPrecision());
+                $this->assertSame("2", $column->getScale());
             }
 
             if ($column->getName() === 'number2') {
-                $this->assertEquals("12", $column->getPrecision());
-                $this->assertEquals("0", $column->getScale());
+                $this->assertSame("12", $column->getPrecision());
+                $this->assertSame("0", $column->getScale());
             }
         }
     }
@@ -727,15 +727,15 @@ class PostgresAdapterTest extends TestCase
         $columns = $this->adapter->getColumns('table1');
         foreach ($columns as $column) {
             if ($column->getName() === 'timestamp1') {
-                $this->assertEquals("0", $column->getPrecision());
+                $this->assertSame("0", $column->getPrecision());
             }
 
             if ($column->getName() === 'timestamp2') {
-                $this->assertEquals("4", $column->getPrecision());
+                $this->assertSame("4", $column->getPrecision());
             }
 
             if ($column->getName() === 'timestamp3') {
-                $this->assertEquals("6", $column->getPrecision());
+                $this->assertSame("6", $column->getPrecision());
             }
         }
     }
@@ -812,7 +812,7 @@ class PostgresAdapterTest extends TestCase
                 $e,
                 'Expected exception of type InvalidArgumentException, got ' . get_class($e)
             );
-            $this->assertEquals('The specified column does not exist: column2', $e->getMessage());
+            $this->assertSame('The specified column does not exist: column2', $e->getMessage());
         }
     }
 
@@ -928,16 +928,16 @@ class PostgresAdapterTest extends TestCase
 
         $columns = $this->adapter->getColumns('t');
         $this->assertCount(2, $columns);
-        $this->assertEquals($colName, $columns[1]->getName());
+        $this->assertSame($colName, $columns[1]->getName());
 
         if (!$actualType) {
             $actualType = $type;
         }
 
         if (is_string($columns[1]->getType())) {
-            $this->assertEquals($actualType, $columns[1]->getType());
+            $this->assertSame($actualType, $columns[1]->getType());
         } else {
-            $this->assertEquals(['name' => $actualType] + $options, $columns[1]->getType());
+            $this->assertSame(['name' => $actualType] + $options, $columns[1]->getType());
         }
     }
 
@@ -953,16 +953,16 @@ class PostgresAdapterTest extends TestCase
 
         $columns = $this->adapter->getColumns('tschema.t');
         $this->assertCount(2, $columns);
-        $this->assertEquals($colName, $columns[1]->getName());
+        $this->assertSame($colName, $columns[1]->getName());
 
         if (!$actualType) {
             $actualType = $type;
         }
 
         if (is_string($columns[1]->getType())) {
-            $this->assertEquals($actualType, $columns[1]->getType());
+            $this->assertSame($actualType, $columns[1]->getType());
         } else {
-            $this->assertEquals(['name' => $actualType] + $options, $columns[1]->getType());
+            $this->assertSame(['name' => $actualType] + $options, $columns[1]->getType());
         }
 
         $this->adapter->dropSchema('tschema');
@@ -1298,42 +1298,42 @@ class PostgresAdapterTest extends TestCase
 
     public function testGetPhinxType()
     {
-        $this->assertEquals('integer', $this->adapter->getPhinxType('int'));
-        $this->assertEquals('integer', $this->adapter->getPhinxType('int4'));
-        $this->assertEquals('integer', $this->adapter->getPhinxType('integer'));
+        $this->assertSame('integer', $this->adapter->getPhinxType('int'));
+        $this->assertSame('integer', $this->adapter->getPhinxType('int4'));
+        $this->assertSame('integer', $this->adapter->getPhinxType('integer'));
 
-        $this->assertEquals('biginteger', $this->adapter->getPhinxType('bigint'));
-        $this->assertEquals('biginteger', $this->adapter->getPhinxType('int8'));
+        $this->assertSame('biginteger', $this->adapter->getPhinxType('bigint'));
+        $this->assertSame('biginteger', $this->adapter->getPhinxType('int8'));
 
-        $this->assertEquals('decimal', $this->adapter->getPhinxType('decimal'));
-        $this->assertEquals('decimal', $this->adapter->getPhinxType('numeric'));
+        $this->assertSame('decimal', $this->adapter->getPhinxType('decimal'));
+        $this->assertSame('decimal', $this->adapter->getPhinxType('numeric'));
 
-        $this->assertEquals('float', $this->adapter->getPhinxType('real'));
-        $this->assertEquals('float', $this->adapter->getPhinxType('float4'));
+        $this->assertSame('float', $this->adapter->getPhinxType('real'));
+        $this->assertSame('float', $this->adapter->getPhinxType('float4'));
 
-        $this->assertEquals('double', $this->adapter->getPhinxType('double precision'));
+        $this->assertSame('double', $this->adapter->getPhinxType('double precision'));
 
-        $this->assertEquals('boolean', $this->adapter->getPhinxType('bool'));
-        $this->assertEquals('boolean', $this->adapter->getPhinxType('boolean'));
+        $this->assertSame('boolean', $this->adapter->getPhinxType('bool'));
+        $this->assertSame('boolean', $this->adapter->getPhinxType('boolean'));
 
-        $this->assertEquals('string', $this->adapter->getPhinxType('character varying'));
-        $this->assertEquals('string', $this->adapter->getPhinxType('varchar'));
+        $this->assertSame('string', $this->adapter->getPhinxType('character varying'));
+        $this->assertSame('string', $this->adapter->getPhinxType('varchar'));
 
-        $this->assertEquals('text', $this->adapter->getPhinxType('text'));
+        $this->assertSame('text', $this->adapter->getPhinxType('text'));
 
-        $this->assertEquals('time', $this->adapter->getPhinxType('time'));
-        $this->assertEquals('time', $this->adapter->getPhinxType('timetz'));
-        $this->assertEquals('time', $this->adapter->getPhinxType('time with time zone'));
-        $this->assertEquals('time', $this->adapter->getPhinxType('time without time zone'));
+        $this->assertSame('time', $this->adapter->getPhinxType('time'));
+        $this->assertSame('time', $this->adapter->getPhinxType('timetz'));
+        $this->assertSame('time', $this->adapter->getPhinxType('time with time zone'));
+        $this->assertSame('time', $this->adapter->getPhinxType('time without time zone'));
 
-        $this->assertEquals('datetime', $this->adapter->getPhinxType('timestamp'));
-        $this->assertEquals('datetime', $this->adapter->getPhinxType('timestamptz'));
-        $this->assertEquals('datetime', $this->adapter->getPhinxType('timestamp with time zone'));
-        $this->assertEquals('datetime', $this->adapter->getPhinxType('timestamp without time zone'));
+        $this->assertSame('datetime', $this->adapter->getPhinxType('timestamp'));
+        $this->assertSame('datetime', $this->adapter->getPhinxType('timestamptz'));
+        $this->assertSame('datetime', $this->adapter->getPhinxType('timestamp with time zone'));
+        $this->assertSame('datetime', $this->adapter->getPhinxType('timestamp without time zone'));
 
-        $this->assertEquals('uuid', $this->adapter->getPhinxType('uuid'));
+        $this->assertSame('uuid', $this->adapter->getPhinxType('uuid'));
 
-        $this->assertEquals('interval', $this->adapter->getPhinxType('interval'));
+        $this->assertSame('interval', $this->adapter->getPhinxType('interval'));
     }
 
     public function testCreateTableWithComment()
@@ -1355,7 +1355,7 @@ class PostgresAdapterTest extends TestCase
             )
         );
 
-        $this->assertEquals($tableComment, $rows[0]['description'], 'Dont set table comment correctly');
+        $this->assertSame($tableComment, $rows[0]['description'], 'Dont set table comment correctly');
     }
 
     public function testCanAddColumnComment()
@@ -1378,7 +1378,7 @@ class PostgresAdapterTest extends TestCase
             AND cols.column_name = \'field1\''
         );
 
-        $this->assertEquals($comment, $row['column_comment'], 'Dont set column comment correctly');
+        $this->assertSame($comment, $row['column_comment'], 'Dont set column comment correctly');
     }
 
     public function testCanAddCommentForColumnWithReservedName()
@@ -1398,7 +1398,7 @@ class PostgresAdapterTest extends TestCase
             AND cols.column_name = \'index\''
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $comment,
             $row['column_comment'],
             'Dont set column comment correctly for tables or columns with reserved names'
@@ -1431,7 +1431,7 @@ class PostgresAdapterTest extends TestCase
             AND cols.column_name = \'field1\''
         );
 
-        $this->assertEquals($comment, $row['column_comment'], 'Dont change column comment correctly');
+        $this->assertSame($comment, $row['column_comment'], 'Dont change column comment correctly');
     }
 
     /**
@@ -1485,7 +1485,7 @@ class PostgresAdapterTest extends TestCase
             AND cols.column_name = \'comment1\''
         );
 
-        $this->assertEquals($comment1, $row['column_comment'], 'Could not create first column comment');
+        $this->assertSame($comment1, $row['column_comment'], 'Could not create first column comment');
 
         $row = $this->adapter->fetchRow(
             'SELECT
@@ -1498,7 +1498,7 @@ class PostgresAdapterTest extends TestCase
             AND cols.column_name = \'comment2\''
         );
 
-        $this->assertEquals($comment2, $row['column_comment'], 'Could not create second column comment');
+        $this->assertSame($comment2, $row['column_comment'], 'Could not create second column comment');
     }
 
     /**
@@ -1527,7 +1527,7 @@ class PostgresAdapterTest extends TestCase
             AND cols.column_name = \'transport\''
         );
 
-        $this->assertEquals($comment, $row['column_comment'], 'Could not create column comment');
+        $this->assertSame($comment, $row['column_comment'], 'Could not create column comment');
     }
 
     /**
@@ -1693,14 +1693,14 @@ class PostgresAdapterTest extends TestCase
             ->save();
 
         $rows = $this->adapter->fetchAll('SELECT * FROM table1');
-        $this->assertEquals('value1', $rows[0]['column1']);
-        $this->assertEquals('value2', $rows[1]['column1']);
-        $this->assertEquals('value3', $rows[2]['column1']);
-        $this->assertEquals(1, $rows[0]['column2']);
-        $this->assertEquals(2, $rows[1]['column2']);
-        $this->assertEquals(3, $rows[2]['column2']);
-        $this->assertEquals('test', $rows[0]['column3']);
-        $this->assertEquals('test', $rows[2]['column3']);
+        $this->assertSame('value1', $rows[0]['column1']);
+        $this->assertSame('value2', $rows[1]['column1']);
+        $this->assertSame('value3', $rows[2]['column1']);
+        $this->assertSame(1, $rows[0]['column2']);
+        $this->assertSame(2, $rows[1]['column2']);
+        $this->assertSame(3, $rows[2]['column2']);
+        $this->assertSame('test', $rows[0]['column3']);
+        $this->assertSame('test', $rows[2]['column3']);
     }
 
     public function testBulkInsertBoolean()
@@ -1745,10 +1745,10 @@ class PostgresAdapterTest extends TestCase
               ->save();
 
         $rows = $this->adapter->fetchAll('SELECT * FROM table1');
-        $this->assertEquals('value1', $rows[0]['column1']);
-        $this->assertEquals('value2', $rows[1]['column1']);
-        $this->assertEquals(1, $rows[0]['column2']);
-        $this->assertEquals(2, $rows[1]['column2']);
+        $this->assertSame('value1', $rows[0]['column1']);
+        $this->assertSame('value2', $rows[1]['column1']);
+        $this->assertSame(1, $rows[0]['column2']);
+        $this->assertSame(2, $rows[1]['column2']);
     }
 
     public function testInsertBoolean()
@@ -1796,10 +1796,10 @@ class PostgresAdapterTest extends TestCase
             ->save();
 
         $rows = $this->adapter->fetchAll('SELECT * FROM "schema1"."table1"');
-        $this->assertEquals('value1', $rows[0]['column1']);
-        $this->assertEquals('value2', $rows[1]['column1']);
-        $this->assertEquals(1, $rows[0]['column2']);
-        $this->assertEquals(2, $rows[1]['column2']);
+        $this->assertSame('value1', $rows[0]['column1']);
+        $this->assertSame('value2', $rows[1]['column1']);
+        $this->assertSame(1, $rows[0]['column2']);
+        $this->assertSame(2, $rows[1]['column2']);
 
         $this->adapter->dropSchema('schema1');
     }
@@ -1953,7 +1953,7 @@ OUTPUT;
         $countQuery = $this->adapter->query('SELECT COUNT(*) FROM table1');
         $this->assertTrue($countQuery->execute());
         $res = $countQuery->fetchAll();
-        $this->assertEquals(0, $res[0]['count']);
+        $this->assertSame(0, $res[0]['count']);
     }
 
     /**
@@ -1998,7 +1998,7 @@ OUTPUT;
         $countQuery = $this->adapter->query('SELECT COUNT(*) FROM table1');
         $this->assertTrue($countQuery->execute());
         $res = $countQuery->fetchAll();
-        $this->assertEquals(0, $res[0]['count']);
+        $this->assertSame(0, $res[0]['count']);
     }
 
     public function testDumpCreateTableAndThenInsert()
@@ -2070,7 +2070,7 @@ OUTPUT;
             ->values(['string_col' => 'value2', 'int_col' => 2])
             ->execute();
 
-        $this->assertEquals(2, $stm->rowCount());
+        $this->assertSame(2, $stm->rowCount());
 
         $builder = $this->adapter->getQueryBuilder();
         $stm = $builder
@@ -2079,8 +2079,8 @@ OUTPUT;
             ->where(['int_col >=' => 2])
             ->execute();
 
-        $this->assertEquals(1, $stm->rowCount());
-        $this->assertEquals(
+        $this->assertSame(1, $stm->rowCount());
+        $this->assertSame(
             ['id' => 2, 'string_col' => 'value2', 'int_col' => '2'],
             $stm->fetch('assoc')
         );
@@ -2091,7 +2091,7 @@ OUTPUT;
             ->where(['int_col <' => 2])
             ->execute();
 
-        $this->assertEquals(1, $stm->rowCount());
+        $this->assertSame(1, $stm->rowCount());
     }
 
     public function testRenameMixedCaseTableAndColumns()

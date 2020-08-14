@@ -40,7 +40,7 @@ class ProxyAdapterTest extends TestCase
 
         $commands = $this->adapter->getInvertedCommands()->getActions();
         $this->assertInstanceOf('Phinx\Db\Action\DropTable', $commands[0]);
-        $this->assertEquals('atable', $commands[0]->getTable()->getName());
+        $this->assertSame('atable', $commands[0]->getTable()->getName());
     }
 
     public function testProxyAdapterCanInvertRenameTable()
@@ -51,8 +51,8 @@ class ProxyAdapterTest extends TestCase
 
         $commands = $this->adapter->getInvertedCommands()->getActions();
         $this->assertInstanceOf('Phinx\Db\Action\RenameTable', $commands[0]);
-        $this->assertEquals('newname', $commands[0]->getTable()->getName());
-        $this->assertEquals('oldname', $commands[0]->getNewName());
+        $this->assertSame('newname', $commands[0]->getTable()->getName());
+        $this->assertSame('oldname', $commands[0]->getNewName());
     }
 
     public function testProxyAdapterCanInvertAddColumn()
@@ -68,8 +68,8 @@ class ProxyAdapterTest extends TestCase
 
         $commands = $this->adapter->getInvertedCommands()->getActions();
         $this->assertInstanceOf('Phinx\Db\Action\RemoveColumn', $commands[0]);
-        $this->assertEquals('atable', $commands[0]->getTable()->getName());
-        $this->assertEquals('acolumn', $commands[0]->getColumn()->getName());
+        $this->assertSame('atable', $commands[0]->getTable()->getName());
+        $this->assertSame('acolumn', $commands[0]->getColumn()->getName());
     }
 
     public function testProxyAdapterCanInvertRenameColumn()
@@ -86,8 +86,8 @@ class ProxyAdapterTest extends TestCase
 
         $commands = $this->adapter->getInvertedCommands()->getActions();
         $this->assertInstanceOf('Phinx\Db\Action\RenameColumn', $commands[0]);
-        $this->assertEquals('newname', $commands[0]->getColumn()->getName());
-        $this->assertEquals('oldname', $commands[0]->getNewName());
+        $this->assertSame('newname', $commands[0]->getColumn()->getName());
+        $this->assertSame('oldname', $commands[0]->getNewName());
     }
 
     public function testProxyAdapterCanInvertAddIndex()
@@ -104,8 +104,8 @@ class ProxyAdapterTest extends TestCase
 
         $commands = $this->adapter->getInvertedCommands()->getActions();
         $this->assertInstanceOf('Phinx\Db\Action\DropIndex', $commands[0]);
-        $this->assertEquals('atable', $commands[0]->getTable()->getName());
-        $this->assertEquals(['email'], $commands[0]->getIndex()->getColumns());
+        $this->assertSame('atable', $commands[0]->getTable()->getName());
+        $this->assertSame(['email'], $commands[0]->getIndex()->getColumns());
     }
 
     public function testProxyAdapterCanInvertAddForeignKey()
@@ -122,8 +122,8 @@ class ProxyAdapterTest extends TestCase
 
         $commands = $this->adapter->getInvertedCommands()->getActions();
         $this->assertInstanceOf('Phinx\Db\Action\DropForeignKey', $commands[0]);
-        $this->assertEquals('atable', $commands[0]->getTable()->getName());
-        $this->assertEquals(['ref_table_id'], $commands[0]->getForeignKey()->getColumns());
+        $this->assertSame('atable', $commands[0]->getTable()->getName());
+        $this->assertSame(['ref_table_id'], $commands[0]->getForeignKey()->getColumns());
     }
 
     public function testGetInvertedCommandsThrowsExceptionForIrreversibleCommand()

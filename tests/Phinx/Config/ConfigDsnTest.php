@@ -26,7 +26,7 @@ class ConfigDsnTest extends AbstractConfigTest
         $this->assertArrayHasKey('host', $options);
         $this->assertSame('my-database-host', $options['host']);
         $this->assertArrayHasKey('port', $options);
-        $this->assertEquals(1234, $options['port']);
+        $this->assertSame(1234, $options['port']);
         $this->assertArrayHasKey('name', $options);
         $this->assertSame('my_app_database', $options['name']);
     }
@@ -107,7 +107,7 @@ class ConfigDsnTest extends AbstractConfigTest
         $cfg = new Config(['environments' => ['testenv' => ['dsn' => $dsn]]]);
         $options = $cfg->getEnvironment('testenv');
         $this->assertSame('my-database-host', $options['host']);
-        $this->assertEquals(1234, $options['port']);
+        $this->assertSame(1234, $options['port']);
     }
 
     public function dataProviderValidDsn()

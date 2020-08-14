@@ -110,12 +110,12 @@ class SqlServerAdapterTest extends TestCase
 
     public function testQuoteTableName()
     {
-        $this->assertEquals('[test_table]', $this->adapter->quoteTableName('test_table'));
+        $this->assertSame('[test_table]', $this->adapter->quoteTableName('test_table'));
     }
 
     public function testQuoteColumnName()
     {
-        $this->assertEquals('[test_column]', $this->adapter->quoteColumnName('test_column'));
+        $this->assertSame('[test_column]', $this->adapter->quoteColumnName('test_column'));
     }
 
     public function testCreateTable()
@@ -157,8 +157,8 @@ FROM sys.columns c JOIN sys.tables t ON c.object_id=t.object_id
 JOIN sys.identity_columns ic ON c.object_id=ic.object_id AND c.column_id=ic.column_id
 WHERE t.name='ntable'");
         $identity = $rows[0];
-        $this->assertEquals($identity['seed_value'], '1');
-        $this->assertEquals($identity['increment_value'], '10');
+        $this->assertSame($identity['seed_value'], '1');
+        $this->assertSame($identity['increment_value'], '10');
     }
 
     public function testCreateTableWithNoPrimaryKey()
@@ -384,7 +384,7 @@ WHERE t.name='ntable'");
         $columns = $this->adapter->getColumns('table1');
         foreach ($columns as $column) {
             if ($column->getName() === 'default_zero') {
-                $this->assertEquals("test", $column->getDefault());
+                $this->assertSame("test", $column->getDefault());
             }
         }
     }
@@ -399,7 +399,7 @@ WHERE t.name='ntable'");
         foreach ($columns as $column) {
             if ($column->getName() === 'default_zero') {
                 $this->assertNotNull($column->getDefault());
-                $this->assertEquals('0', $column->getDefault());
+                $this->assertSame('0', $column->getDefault());
             }
         }
     }
@@ -464,7 +464,7 @@ WHERE t.name='ntable'");
                 $e,
                 'Expected exception of type InvalidArgumentException, got ' . get_class($e)
             );
-            $this->assertEquals('The specified column does not exist: column2', $e->getMessage());
+            $this->assertSame('The specified column does not exist: column2', $e->getMessage());
         }
     }
 
@@ -481,7 +481,7 @@ WHERE t.name='ntable'");
         $columns = $this->adapter->getColumns('t');
         foreach ($columns as $column) {
             if ($column->getName() === 'column1') {
-                $this->assertEquals('string', $column->getType());
+                $this->assertSame('string', $column->getType());
             }
         }
     }
@@ -598,8 +598,8 @@ WHERE t.name='ntable'");
 
         $columns = $this->adapter->getColumns('t');
         $this->assertCount(2, $columns);
-        $this->assertEquals($colName, $columns[$colName]->getName());
-        $this->assertEquals($type, $columns[$colName]->getType());
+        $this->assertSame($colName, $columns[$colName]->getName());
+        $this->assertSame($type, $columns[$colName]->getType());
     }
 
     public function testAddIndex()
@@ -628,9 +628,9 @@ WHERE t.name='ntable'");
         $this->assertArrayHasKey('table1_email', $indexes);
         $this->assertArrayHasKey('email_username', $indexes);
 
-        $this->assertEquals(['id'], $indexes['PK_table1']['columns']);
-        $this->assertEquals(['email'], $indexes['table1_email']['columns']);
-        $this->assertEquals(['email', 'username'], $indexes['email_username']['columns']);
+        $this->assertSame(['id'], $indexes['PK_table1']['columns']);
+        $this->assertSame(['email'], $indexes['table1_email']['columns']);
+        $this->assertSame(['email', 'username'], $indexes['email_username']['columns']);
     }
 
     public function testDropIndex()
@@ -760,31 +760,31 @@ WHERE t.name='ntable'");
 
     public function testGetPhinxType()
     {
-        $this->assertEquals('integer', $this->adapter->getPhinxType('int'));
-        $this->assertEquals('integer', $this->adapter->getPhinxType('integer'));
+        $this->assertSame('integer', $this->adapter->getPhinxType('int'));
+        $this->assertSame('integer', $this->adapter->getPhinxType('integer'));
 
-        $this->assertEquals('smallinteger', $this->adapter->getPhinxType('smallint'));
-        $this->assertEquals('biginteger', $this->adapter->getPhinxType('bigint'));
+        $this->assertSame('smallinteger', $this->adapter->getPhinxType('smallint'));
+        $this->assertSame('biginteger', $this->adapter->getPhinxType('bigint'));
 
-        $this->assertEquals('decimal', $this->adapter->getPhinxType('decimal'));
-        $this->assertEquals('decimal', $this->adapter->getPhinxType('numeric'));
+        $this->assertSame('decimal', $this->adapter->getPhinxType('decimal'));
+        $this->assertSame('decimal', $this->adapter->getPhinxType('numeric'));
 
-        $this->assertEquals('float', $this->adapter->getPhinxType('real'));
+        $this->assertSame('float', $this->adapter->getPhinxType('real'));
 
-        $this->assertEquals('boolean', $this->adapter->getPhinxType('bit'));
+        $this->assertSame('boolean', $this->adapter->getPhinxType('bit'));
 
-        $this->assertEquals('string', $this->adapter->getPhinxType('varchar'));
-        $this->assertEquals('string', $this->adapter->getPhinxType('nvarchar'));
-        $this->assertEquals('char', $this->adapter->getPhinxType('char'));
-        $this->assertEquals('char', $this->adapter->getPhinxType('nchar'));
+        $this->assertSame('string', $this->adapter->getPhinxType('varchar'));
+        $this->assertSame('string', $this->adapter->getPhinxType('nvarchar'));
+        $this->assertSame('char', $this->adapter->getPhinxType('char'));
+        $this->assertSame('char', $this->adapter->getPhinxType('nchar'));
 
-        $this->assertEquals('text', $this->adapter->getPhinxType('text'));
+        $this->assertSame('text', $this->adapter->getPhinxType('text'));
 
-        $this->assertEquals('datetime', $this->adapter->getPhinxType('timestamp'));
+        $this->assertSame('datetime', $this->adapter->getPhinxType('timestamp'));
 
-        $this->assertEquals('date', $this->adapter->getPhinxType('date'));
+        $this->assertSame('date', $this->adapter->getPhinxType('date'));
 
-        $this->assertEquals('datetime', $this->adapter->getPhinxType('datetime'));
+        $this->assertSame('datetime', $this->adapter->getPhinxType('datetime'));
     }
 
     public function testAddColumnComment()
@@ -795,7 +795,7 @@ WHERE t.name='ntable'");
 
         $resultComment = $this->adapter->getColumnComment('table1', 'field1');
 
-        $this->assertEquals($comment, $resultComment, 'Dont set column comment correctly');
+        $this->assertSame($comment, $resultComment, 'Dont set column comment correctly');
     }
 
     /**
@@ -812,7 +812,7 @@ WHERE t.name='ntable'");
 
         $resultComment = $this->adapter->getColumnComment('table1', 'field1');
 
-        $this->assertEquals($comment, $resultComment, 'Dont change column comment correctly');
+        $this->assertSame($comment, $resultComment, 'Dont change column comment correctly');
     }
 
     /**
@@ -878,12 +878,12 @@ WHERE t.name='ntable'");
 
         $rows = $this->adapter->fetchAll('SELECT * FROM table1');
 
-        $this->assertEquals('value1', $rows[0]['column1']);
-        $this->assertEquals('value2', $rows[1]['column1']);
-        $this->assertEquals('value3', $rows[2]['column1']);
-        $this->assertEquals(1, $rows[0]['column2']);
-        $this->assertEquals(2, $rows[1]['column2']);
-        $this->assertEquals(3, $rows[2]['column2']);
+        $this->assertSame('value1', $rows[0]['column1']);
+        $this->assertSame('value2', $rows[1]['column1']);
+        $this->assertSame('value3', $rows[2]['column1']);
+        $this->assertSame(1, $rows[0]['column2']);
+        $this->assertSame(2, $rows[1]['column2']);
+        $this->assertSame(3, $rows[2]['column2']);
     }
 
     public function testInsertData()
@@ -911,12 +911,12 @@ WHERE t.name='ntable'");
 
         $rows = $this->adapter->fetchAll('SELECT * FROM table1');
 
-        $this->assertEquals('value1', $rows[0]['column1']);
-        $this->assertEquals('value2', $rows[1]['column1']);
-        $this->assertEquals('value3', $rows[2]['column1']);
-        $this->assertEquals(1, $rows[0]['column2']);
-        $this->assertEquals(2, $rows[1]['column2']);
-        $this->assertEquals(3, $rows[2]['column2']);
+        $this->assertSame('value1', $rows[0]['column1']);
+        $this->assertSame('value2', $rows[1]['column1']);
+        $this->assertSame('value3', $rows[2]['column1']);
+        $this->assertSame(1, $rows[0]['column2']);
+        $this->assertSame(2, $rows[1]['column2']);
+        $this->assertSame(3, $rows[2]['column2']);
     }
 
     public function testTruncateTable()
@@ -1024,8 +1024,8 @@ OUTPUT;
             ->where(['int_col >=' => 2])
             ->execute();
 
-        $this->assertEquals(1, $stm->rowCount());
-        $this->assertEquals(
+        $this->assertSame(1, $stm->rowCount());
+        $this->assertSame(
             ['id' => 2, 'string_col' => 'value2', 'int_col' => '2'],
             $stm->fetch('assoc')
         );
@@ -1050,6 +1050,6 @@ INPUT;
         $table = new \Phinx\Db\Table('test', [], $this->adapter);
         $columns = $table->getColumns();
         $this->assertCount(1, $columns);
-        $this->assertEquals(Literal::from('smallmoney'), array_pop($columns)->getType());
+        $this->assertSame(Literal::from('smallmoney'), array_pop($columns)->getType());
     }
 }

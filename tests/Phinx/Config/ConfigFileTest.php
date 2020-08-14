@@ -41,7 +41,7 @@ class ConfigFileTest extends TestCase
         $foundPath = $this->runLocateFile($input, $dir);
         $expectedPath = $this->baseDir . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $expectedFile;
 
-        $this->assertEquals($foundPath, $expectedPath);
+        $this->assertSame($foundPath, $expectedPath);
     }
 
     /**

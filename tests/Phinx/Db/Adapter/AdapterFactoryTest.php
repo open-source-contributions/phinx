@@ -38,7 +38,7 @@ class AdapterFactoryTest extends TestCase
         $adapter = $method->invoke($this->factory, 'mysql');
         $this->factory->registerAdapter('test', $adapter);
 
-        $this->assertEquals($adapter, $method->invoke($this->factory, 'test'));
+        $this->assertSame($adapter, $method->invoke($this->factory, 'test'));
     }
 
     public function testRegisterAdapterFailure()
@@ -76,7 +76,7 @@ class AdapterFactoryTest extends TestCase
         $wrapper = $method->invoke($this->factory, 'proxy');
         $this->factory->registerWrapper('test', $wrapper);
 
-        $this->assertEquals($wrapper, $method->invoke($this->factory, 'test'));
+        $this->assertSame($wrapper, $method->invoke($this->factory, 'test'));
     }
 
     public function testRegisterWrapperFailure()

@@ -235,7 +235,7 @@ class RollbackTest extends TestCase
     public function testGetTargetFromDate($date, $expectedTarget)
     {
         $rollbackCommand = new Rollback();
-        $this->assertEquals($expectedTarget, $rollbackCommand->getTargetFromDate($date));
+        $this->assertSame($expectedTarget, $rollbackCommand->getTargetFromDate($date));
     }
 
     public function getTargetFromDataProvider()

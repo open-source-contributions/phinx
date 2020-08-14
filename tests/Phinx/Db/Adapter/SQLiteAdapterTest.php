@@ -116,12 +116,12 @@ class SQLiteAdapterTest extends TestCase
 
     public function testQuoteTableName()
     {
-        $this->assertEquals('`test_table`', $this->adapter->quoteTableName('test_table'));
+        $this->assertSame('`test_table`', $this->adapter->quoteTableName('test_table'));
     }
 
     public function testQuoteColumnName()
     {
-        $this->assertEquals('`test_column`', $this->adapter->quoteColumnName('test_column'));
+        $this->assertSame('`test_column`', $this->adapter->quoteColumnName('test_column'));
     }
 
     public function testCreateTable()
@@ -394,7 +394,7 @@ class SQLiteAdapterTest extends TestCase
         // In SQLite it is not possible to dictate order of added columns.
         // $table->addColumn('realname', 'string', array('after' => 'id'))
         //       ->save();
-        // $this->assertEquals('realname', $rows[1]['Field']);
+        // $this->assertSame('realname', $rows[1]['Field']);
     }
 
     public function testAddColumnWithDefaultValue()
@@ -404,7 +404,7 @@ class SQLiteAdapterTest extends TestCase
         $table->addColumn('default_zero', 'string', ['default' => 'test'])
             ->save();
         $rows = $this->adapter->fetchAll(sprintf('pragma table_info(%s)', 'table1'));
-        $this->assertEquals("'test'", $rows[1]['dflt_value']);
+        $this->assertSame("'test'", $rows[1]['dflt_value']);
     }
 
     public function testAddColumnWithDefaultZero()
@@ -415,7 +415,7 @@ class SQLiteAdapterTest extends TestCase
             ->save();
         $rows = $this->adapter->fetchAll(sprintf('pragma table_info(%s)', 'table1'));
         $this->assertNotNull($rows[1]['dflt_value']);
-        $this->assertEquals("0", $rows[1]['dflt_value']);
+        $this->assertSame("0", $rows[1]['dflt_value']);
     }
 
     public function testAddColumnWithDefaultEmptyString()
@@ -425,7 +425,7 @@ class SQLiteAdapterTest extends TestCase
         $table->addColumn('default_empty', 'string', ['default' => ''])
             ->save();
         $rows = $this->adapter->fetchAll(sprintf('pragma table_info(%s)', 'table1'));
-        $this->assertEquals("''", $rows[1]['dflt_value']);
+        $this->assertSame("''", $rows[1]['dflt_value']);
     }
 
     public function testAddDoubleColumn()
@@ -435,7 +435,7 @@ class SQLiteAdapterTest extends TestCase
         $table->addColumn('foo', 'double', ['null' => true])
             ->save();
         $rows = $this->adapter->fetchAll(sprintf('pragma table_info(%s)', 'table1'));
-        $this->assertEquals('DOUBLE', $rows[1]['type']);
+        $this->assertSame('DOUBLE', $rows[1]['type']);
     }
 
     public function testRenameColumn()
@@ -464,7 +464,7 @@ class SQLiteAdapterTest extends TestCase
                 $e,
                 'Expected exception of type InvalidArgumentException, got ' . get_class($e)
             );
-            $this->assertEquals('The specified column doesn\'t exist: column2', $e->getMessage());
+            $this->assertSame('The specified column doesn\'t exist: column2', $e->getMessage());
         }
     }
 
@@ -497,7 +497,7 @@ class SQLiteAdapterTest extends TestCase
         $table->changeColumn('column1', $newColumn1)->save();
         $rows = $this->adapter->fetchAll('pragma table_info(t)');
 
-        $this->assertEquals("'test1'", $rows[1]['dflt_value']);
+        $this->assertSame("'test1'", $rows[1]['dflt_value']);
     }
 
     /**
@@ -531,7 +531,7 @@ class SQLiteAdapterTest extends TestCase
             ->setType('integer');
         $table->changeColumn('column1', $newColumn1)->save();
         $rows = $this->adapter->fetchAll('pragma table_info(t)');
-        $this->assertEquals("0", $rows[1]['dflt_value']);
+        $this->assertSame("0", $rows[1]['dflt_value']);
     }
 
     public function testChangeColumnDefaultToNull()
@@ -558,7 +558,7 @@ class SQLiteAdapterTest extends TestCase
             ->setType('string');
         $table->changeColumn('column1', $newColumn1)->save();
         $cols = $this->adapter->getColumns('t');
-        $this->assertEquals('another default', (string)$cols[1]->getDefault());
+        $this->assertSame('another default', (string)$cols[1]->getDefault());
     }
 
     /**
@@ -776,7 +776,7 @@ class SQLiteAdapterTest extends TestCase
 
     public function testPhinxTypeLiteral()
     {
-        $this->assertEquals(
+        $this->assertSame(
             [
                 'name' => Literal::from('fake'),
                 'limit' => null,
@@ -793,7 +793,7 @@ class SQLiteAdapterTest extends TestCase
             'limit' => null,
             'scale' => null,
         ];
-        $this->assertEquals($exp, $this->adapter->getPhinxType('?int?'));
+        $this->assertSame($exp, $this->adapter->getPhinxType('?int?'));
     }
 
     public function testAddIndexTwoTablesSameIndex()
@@ -847,13 +847,13 @@ class SQLiteAdapterTest extends TestCase
             ->save();
         $rows = $this->adapter->fetchAll('SELECT * FROM table1');
 
-        $this->assertEquals('value1', $rows[0]['column1']);
-        $this->assertEquals('value2', $rows[1]['column1']);
-        $this->assertEquals('value3', $rows[2]['column1']);
-        $this->assertEquals('\'value4\'', $rows[3]['column1']);
-        $this->assertEquals(1, $rows[0]['column2']);
-        $this->assertEquals(2, $rows[1]['column2']);
-        $this->assertEquals(3, $rows[2]['column2']);
+        $this->assertSame('value1', $rows[0]['column1']);
+        $this->assertSame('value2', $rows[1]['column1']);
+        $this->assertSame('value3', $rows[2]['column1']);
+        $this->assertSame('\'value4\'', $rows[3]['column1']);
+        $this->assertSame(1, $rows[0]['column2']);
+        $this->assertSame(2, $rows[1]['column2']);
+        $this->assertSame(3, $rows[2]['column2']);
         $this->assertNull($rows[3]['column2']);
     }
 
@@ -888,13 +888,13 @@ class SQLiteAdapterTest extends TestCase
 
         $rows = $this->adapter->fetchAll('SELECT * FROM table1');
 
-        $this->assertEquals('value1', $rows[0]['column1']);
-        $this->assertEquals('value2', $rows[1]['column1']);
-        $this->assertEquals('value3', $rows[2]['column1']);
-        $this->assertEquals('\'value4\'', $rows[3]['column1']);
-        $this->assertEquals(1, $rows[0]['column2']);
-        $this->assertEquals(2, $rows[1]['column2']);
-        $this->assertEquals(3, $rows[2]['column2']);
+        $this->assertSame('value1', $rows[0]['column1']);
+        $this->assertSame('value2', $rows[1]['column1']);
+        $this->assertSame('value3', $rows[2]['column1']);
+        $this->assertSame('\'value4\'', $rows[3]['column1']);
+        $this->assertSame(1, $rows[0]['column2']);
+        $this->assertSame(2, $rows[1]['column2']);
+        $this->assertSame(3, $rows[2]['column2']);
         $this->assertNull($rows[3]['column2']);
     }
 
@@ -911,9 +911,9 @@ class SQLiteAdapterTest extends TestCase
 
         $rows = $this->adapter->fetchAll('SELECT * FROM table1');
 
-        $this->assertEquals('a', $rows[0]['column1']);
+        $this->assertSame('a', $rows[0]['column1']);
         $this->assertNull($rows[0]['column2']);
-        $this->assertEquals('c', $rows[0]['column3']);
+        $this->assertSame('c', $rows[0]['column3']);
     }
 
     public function testNullWithoutDefaultValue()
@@ -938,21 +938,21 @@ class SQLiteAdapterTest extends TestCase
         $cc = $columns[3];
         $dd = $columns[4];
 
-        $this->assertEquals("aa", $aa->getName());
+        $this->assertSame("aa", $aa->getName());
         $this->assertTrue($aa->isNull());
         $this->assertNull($aa->getDefault());
 
-        $this->assertEquals("bb", $bb->getName());
+        $this->assertSame("bb", $bb->getName());
         $this->assertFalse($bb->isNull());
         $this->assertNull($bb->getDefault());
 
-        $this->assertEquals("cc", $cc->getName());
+        $this->assertSame("cc", $cc->getName());
         $this->assertTrue($cc->isNull());
-        $this->assertEquals("some1", $cc->getDefault());
+        $this->assertSame("some1", $cc->getDefault());
 
-        $this->assertEquals("dd", $dd->getName());
+        $this->assertSame("dd", $dd->getName());
         $this->assertFalse($dd->isNull());
-        $this->assertEquals("some2", $dd->getDefault());
+        $this->assertSame("some2", $dd->getDefault());
     }
 
     public function testDumpCreateTable()
@@ -1019,7 +1019,7 @@ OUTPUT;
         $countQuery = $this->adapter->query('SELECT COUNT(*) FROM table1');
         $this->assertTrue($countQuery->execute());
         $res = $countQuery->fetchAll();
-        $this->assertEquals(0, $res[0]['COUNT(*)']);
+        $this->assertSame(0, $res[0]['COUNT(*)']);
     }
 
     /**
@@ -1060,7 +1060,7 @@ OUTPUT;
         $countQuery = $this->adapter->query('SELECT COUNT(*) FROM table1');
         $this->assertTrue($countQuery->execute());
         $res = $countQuery->fetchAll();
-        $this->assertEquals(0, $res[0]['COUNT(*)']);
+        $this->assertSame(0, $res[0]['COUNT(*)']);
     }
 
     public function testDumpCreateTableAndThenInsert()
@@ -1112,7 +1112,7 @@ OUTPUT;
             ->values(['string_col' => 'value2', 'int_col' => 2])
             ->execute();
 
-        $this->assertEquals(2, $stm->rowCount());
+        $this->assertSame(2, $stm->rowCount());
 
         $builder = $this->adapter->getQueryBuilder();
         $stm = $builder
@@ -1121,8 +1121,8 @@ OUTPUT;
             ->where(['int_col >=' => 2])
             ->execute();
 
-        $this->assertEquals(1, $stm->rowCount());
-        $this->assertEquals(
+        $this->assertSame(1, $stm->rowCount());
+        $this->assertSame(
             ['id' => 2, 'string_col' => 'value2', 'int_col' => '2'],
             $stm->fetch('assoc')
         );
@@ -1133,7 +1133,7 @@ OUTPUT;
             ->where(['int_col <' => 2])
             ->execute();
 
-        $this->assertEquals(1, $stm->rowCount());
+        $this->assertSame(1, $stm->rowCount());
     }
 
     /**
@@ -1161,7 +1161,7 @@ OUTPUT;
             ['name' => 'updated_at', 'type' => 'timestamp', 'default' => null, 'null' => true],
         ];
 
-        $this->assertEquals(count($expected), count($columns));
+        $this->assertSame(count($expected), count($columns));
 
         $columnCount = count($columns);
         for ($i = 0; $i < $columnCount; $i++) {
@@ -1197,7 +1197,7 @@ OUTPUT;
             ['name' => 'column3', 'type' => 'string', 'default' => null, 'null' => true],
         ];
 
-        $this->assertEquals(count($expected), count($columns));
+        $this->assertSame(count($expected), count($columns));
 
         $columnCount = count($columns);
         for ($i = 0; $i < $columnCount; $i++) {
@@ -1217,7 +1217,7 @@ INPUT;
         $table = new \Phinx\Db\Table('test', [], $this->adapter);
         $columns = $table->getColumns();
         $this->assertCount(1, $columns);
-        $this->assertEquals(Literal::from('decimal'), array_pop($columns)->getType());
+        $this->assertSame(Literal::from('decimal'), array_pop($columns)->getType());
     }
 
     /**
@@ -1284,7 +1284,7 @@ INPUT;
     {
         $conn = $this->adapter->getConnection();
         $conn->exec($tableDef);
-        $this->assertEquals($exp, $this->adapter->hasIndex('t', $cols));
+        $this->assertSame($exp, $this->adapter->hasIndex('t', $cols));
     }
 
     public function provideIndexColumnsToCheck()
@@ -1319,7 +1319,7 @@ INPUT;
     {
         $conn = $this->adapter->getConnection();
         $conn->exec($tableDef);
-        $this->assertEquals($exp, $this->adapter->hasIndexByName('t', $index));
+        $this->assertSame($exp, $this->adapter->hasIndexByName('t', $index));
     }
 
     public function provideIndexNamesToCheck()
@@ -1466,7 +1466,7 @@ INPUT;
             $this->adapter->getSqlType($phinxType, $limit);
         } else {
             $exp = ['name' => $exp, 'limit' => $limit];
-            $this->assertEquals($exp, $this->adapter->getSqlType($phinxType, $limit));
+            $this->assertSame($exp, $this->adapter->getSqlType($phinxType, $limit));
         }
     }
 
@@ -1519,7 +1519,7 @@ INPUT;
      */
     public function testGetPhinxType($sqlType, $exp)
     {
-        $this->assertEquals($exp, $this->adapter->getPhinxType($sqlType));
+        $this->assertSame($exp, $this->adapter->getPhinxType($sqlType));
     }
 
     /**
@@ -1725,7 +1725,7 @@ INPUT;
         sort($columnTypes);
         sort($expected);
 
-        $this->assertEquals($expected, $columnTypes);
+        $this->assertSame($expected, $columnTypes);
     }
 
     /**
@@ -1810,7 +1810,7 @@ INPUT;
     {
         $conn = $this->adapter->getConnection();
         $conn->exec($tableDef);
-        $this->assertEquals($exp, $this->adapter->hasColumn('t', $col));
+        $this->assertSame($exp, $this->adapter->hasColumn('t', $col));
     }
 
     public function provideColumnNamesToCheck()
@@ -1856,7 +1856,7 @@ INPUT;
             $this->assertInstanceOf(Column::class, $act[$index]);
             foreach ($data as $key => $value) {
                 $m = 'get' . ucfirst($key);
-                $this->assertEquals($value, $act[$index]->$m(), "Parameter '$key' of column at index $index did not match expectations.");
+                $this->assertSame($value, $act[$index]->$m(), "Parameter '$key' of column at index $index did not match expectations.");
             }
         }
     }
@@ -1876,7 +1876,7 @@ INPUT;
                 $act[] = $col->getName();
             }
         }
-        $this->assertEquals((array)$exp, $act);
+        $this->assertSame((array)$exp, $act);
     }
 
     public function provideIdentityCandidates()
@@ -1903,7 +1903,7 @@ INPUT;
         $conn->exec($tableDef);
         $act = $this->adapter->getColumns('t')[0]->getDefault();
         if (is_object($exp)) {
-            $this->assertEquals($exp, $act);
+            $this->assertSame($exp, $act);
         } else {
             $this->assertSame($exp, $act);
         }
@@ -1980,7 +1980,7 @@ INPUT;
         $conn->exec($tableDef);
         $act = $this->adapter->getColumns('t')[0]->getDefault();
         if (is_object($exp)) {
-            $this->assertEquals($exp, $act);
+            $this->assertSame($exp, $act);
         } else {
             $this->assertSame($exp, $act);
         }
@@ -2009,12 +2009,12 @@ INPUT;
         $conn->exec("INSERT INTO $tableId default values");
         $conn->exec("INSERT INTO $tableId default values");
         $conn->exec("INSERT INTO $tableId default values");
-        $this->assertEquals(3, $conn->query("select count(*) from $tableId")->fetchColumn(), 'Broken fixture: data were not inserted properly');
-        $this->assertEquals(3, $conn->query("select max(id) from $tableId")->fetchColumn(), 'Broken fixture: data were not inserted properly');
+        $this->assertSame(3, $conn->query("select count(*) from $tableId")->fetchColumn(), 'Broken fixture: data were not inserted properly');
+        $this->assertSame(3, $conn->query("select max(id) from $tableId")->fetchColumn(), 'Broken fixture: data were not inserted properly');
         $this->adapter->truncateTable($tableName);
-        $this->assertEquals(0, $conn->query("select count(*) from $tableId")->fetchColumn(), 'Table was not truncated');
+        $this->assertSame(0, $conn->query("select count(*) from $tableId")->fetchColumn(), 'Table was not truncated');
         $conn->exec("INSERT INTO $tableId default values");
-        $this->assertEquals(1, $conn->query("select max(id) from $tableId")->fetchColumn(), 'Autoincrement was not reset');
+        $this->assertSame(1, $conn->query("select max(id) from $tableId")->fetchColumn(), 'Autoincrement was not reset');
     }
 
     /**
@@ -2086,7 +2086,7 @@ INPUT;
 
         $this->assertTrue($this->adapter->hasForeignKey($table->getName(), [$refTableColumnId]));
         $this->assertFalse($this->adapter->hasTable("tmp_{$refTable->getName()}"));
-        $this->assertEquals('text', $this->adapter->getColumns($refTable->getName())[1]->getType());
+        $this->assertSame('text', $this->adapter->getColumns($refTable->getName())[1]->getType());
 
         $rows = $this->adapter->fetchAll('select * from sqlite_master where `type` = \'table\'');
         foreach ($rows as $row) {

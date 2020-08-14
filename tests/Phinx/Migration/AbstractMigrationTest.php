@@ -30,7 +30,7 @@ class AbstractMigrationTest extends TestCase
     {
         // stub migration
         $migrationStub = $this->getMockForAbstractClass('\Phinx\Migration\AbstractMigration', ['mockenv', 0]);
-        $this->assertEquals('mockenv', $migrationStub->getEnvironment());
+        $this->assertSame('mockenv', $migrationStub->getEnvironment());
     }
 
     public function testSetOutputMethods()
@@ -85,9 +85,9 @@ class AbstractMigrationTest extends TestCase
     public function testVersionMethods()
     {
         $migrationStub = $this->getMockForAbstractClass('\Phinx\Migration\AbstractMigration', ['mockenv', 20120103080000]);
-        $this->assertEquals(20120103080000, $migrationStub->getVersion());
+        $this->assertSame(20120103080000, $migrationStub->getVersion());
         $migrationStub->setVersion(20120915093312);
-        $this->assertEquals(20120915093312, $migrationStub->getVersion());
+        $this->assertSame(20120915093312, $migrationStub->getVersion());
     }
 
     public function testExecute()
@@ -104,7 +104,7 @@ class AbstractMigrationTest extends TestCase
                     ->will($this->returnValue(2));
 
         $migrationStub->setAdapter($adapterStub);
-        $this->assertEquals(2, $migrationStub->execute('SELECT FOO FROM BAR'));
+        $this->assertSame(2, $migrationStub->execute('SELECT FOO FROM BAR'));
     }
 
     public function testQuery()
@@ -121,7 +121,7 @@ class AbstractMigrationTest extends TestCase
                     ->will($this->returnValue([['0' => 'bar', 'foo' => 'bar']]));
 
         $migrationStub->setAdapter($adapterStub);
-        $this->assertEquals([['0' => 'bar', 'foo' => 'bar']], $migrationStub->query('SELECT FOO FROM BAR'));
+        $this->assertSame([['0' => 'bar', 'foo' => 'bar']], $migrationStub->query('SELECT FOO FROM BAR'));
     }
 
     public function testFetchRow()
@@ -138,7 +138,7 @@ class AbstractMigrationTest extends TestCase
                     ->will($this->returnValue(['0' => 'bar', 'foo' => 'bar']));
 
         $migrationStub->setAdapter($adapterStub);
-        $this->assertEquals(['0' => 'bar', 'foo' => 'bar'], $migrationStub->fetchRow('SELECT FOO FROM BAR'));
+        $this->assertSame(['0' => 'bar', 'foo' => 'bar'], $migrationStub->fetchRow('SELECT FOO FROM BAR'));
     }
 
     public function testFetchAll()
@@ -155,7 +155,7 @@ class AbstractMigrationTest extends TestCase
                     ->will($this->returnValue([['0' => 'bar', 'foo' => 'bar']]));
 
         $migrationStub->setAdapter($adapterStub);
-        $this->assertEquals([['0' => 'bar', 'foo' => 'bar']], $migrationStub->fetchAll('SELECT FOO FROM BAR'));
+        $this->assertSame([['0' => 'bar', 'foo' => 'bar']], $migrationStub->fetchAll('SELECT FOO FROM BAR'));
     }
 
     public function testInsertTable()

@@ -21,7 +21,7 @@ class ConfigPhpTest extends TestCase
     {
         $path = __DIR__ . '/_files';
         $config = Config::fromPhp($path . '/valid_config.php');
-        $this->assertEquals('dev', $config->getDefaultEnvironment());
+        $this->assertSame('dev', $config->getDefaultEnvironment());
     }
 
     /**

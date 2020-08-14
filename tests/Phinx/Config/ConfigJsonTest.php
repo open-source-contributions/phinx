@@ -20,7 +20,7 @@ class ConfigJsonTest extends TestCase
     {
         $path = __DIR__ . '/_files';
         $config = Config::fromJson($path . '/valid_config.json');
-        $this->assertEquals('dev', $config->getDefaultEnvironment());
+        $this->assertSame('dev', $config->getDefaultEnvironment());
     }
 
     /**

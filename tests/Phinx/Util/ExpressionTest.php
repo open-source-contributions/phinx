@@ -12,7 +12,7 @@ class ExpressionTest extends TestCase
     {
         $str = 'test1';
         $instance = new Expression($str);
-        $this->assertEquals($str, (string)$instance);
+        $this->assertSame($str, (string)$instance);
     }
 
     public function testFrom()
@@ -20,6 +20,6 @@ class ExpressionTest extends TestCase
         $str = 'test1';
         $instance = Expression::from($str);
         $this->assertInstanceOf('\Phinx\Util\Expression', $instance);
-        $this->assertEquals($str, (string)$instance);
+        $this->assertSame($str, (string)$instance);
     }
 }

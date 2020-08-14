@@ -88,7 +88,7 @@ class StatusTest extends TestCase
         $commandTester = new CommandTester($command);
         $exitCode = $commandTester->execute(['command' => $command->getName()], ['decorated' => false]);
 
-        $this->assertEquals(AbstractCommand::CODE_SUCCESS, $exitCode);
+        $this->assertSame(AbstractCommand::CODE_SUCCESS, $exitCode);
 
         $display = $commandTester->getDisplay();
         $this->assertRegExp('/no environment specified/', $display);
@@ -135,7 +135,7 @@ class StatusTest extends TestCase
         $exitCode = $commandTester->execute(['command' => $command->getName(), '--environment' => 'development'], ['decorated' => false]);
 
         $this->assertRegExp('/using environment development/', $commandTester->getDisplay());
-        $this->assertEquals(AbstractCommand::CODE_SUCCESS, $exitCode);
+        $this->assertSame(AbstractCommand::CODE_SUCCESS, $exitCode);
     }
 
     public function testExecuteWithEnvironmentOption()
@@ -163,7 +163,7 @@ class StatusTest extends TestCase
         $exitCode = $commandTester->execute(['command' => $command->getName(), '--environment' => 'development'], ['decorated' => false]);
 
         $this->assertRegExp('/using environment development/', $commandTester->getDisplay());
-        $this->assertEquals(AbstractCommand::CODE_SUCCESS, $exitCode);
+        $this->assertSame(AbstractCommand::CODE_SUCCESS, $exitCode);
     }
 
     public function testExecuteWithInvalidEnvironmentOption()
@@ -190,7 +190,7 @@ class StatusTest extends TestCase
 
         $this->assertRegExp('/using environment fakeenv/', $commandTester->getDisplay());
         $this->assertStringEndsWith("The environment \"fakeenv\" does not exist", trim($commandTester->getDisplay()));
-        $this->assertEquals(AbstractCommand::CODE_ERROR, $exitCode);
+        $this->assertSame(AbstractCommand::CODE_ERROR, $exitCode);
     }
 
     public function testFormatSpecified()
@@ -216,7 +216,7 @@ class StatusTest extends TestCase
 
         $commandTester = new CommandTester($command);
         $exitCode = $commandTester->execute(['command' => $command->getName(), '--format' => AbstractCommand::FORMAT_JSON], ['decorated' => false]);
-        $this->assertEquals(AbstractCommand::CODE_SUCCESS, $exitCode);
+        $this->assertSame(AbstractCommand::CODE_SUCCESS, $exitCode);
         $this->assertRegExp('/using format json/', $commandTester->getDisplay());
     }
 
@@ -246,7 +246,7 @@ class StatusTest extends TestCase
         $commandTester = new CommandTester($command);
         $exitCode = $commandTester->execute(['command' => $command->getName()], ['decorated' => false]);
 
-        $this->assertEquals(AbstractCommand::CODE_SUCCESS, $exitCode);
+        $this->assertSame(AbstractCommand::CODE_SUCCESS, $exitCode);
 
         $display = $commandTester->getDisplay();
         $this->assertRegExp('/no environment specified/', $display);
@@ -279,7 +279,7 @@ class StatusTest extends TestCase
         $commandTester = new CommandTester($command);
         $exitCode = $commandTester->execute(['command' => $command->getName()], ['decorated' => false]);
 
-        $this->assertEquals(AbstractCommand::CODE_STATUS_MISSING, $exitCode);
+        $this->assertSame(AbstractCommand::CODE_STATUS_MISSING, $exitCode);
     }
 
     public function testExitCodeDownMigrations()
@@ -308,7 +308,7 @@ class StatusTest extends TestCase
         $commandTester = new CommandTester($command);
         $exitCode = $commandTester->execute(['command' => $command->getName()], ['decorated' => false]);
 
-        $this->assertEquals(AbstractCommand::CODE_STATUS_DOWN, $exitCode);
+        $this->assertSame(AbstractCommand::CODE_STATUS_DOWN, $exitCode);
     }
 
     public function testExitCodeMissingAndDownMigrations()
@@ -337,6 +337,6 @@ class StatusTest extends TestCase
         $commandTester = new CommandTester($command);
         $exitCode = $commandTester->execute(['command' => $command->getName()], ['decorated' => false]);
 
-        $this->assertEquals(AbstractCommand::CODE_STATUS_MISSING, $exitCode);
+        $this->assertSame(AbstractCommand::CODE_STATUS_MISSING, $exitCode);
     }
 }

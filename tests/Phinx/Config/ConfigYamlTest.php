@@ -55,13 +55,13 @@ class ConfigYamlTest extends TestCase
         // test using a Yaml file without the 'default_environment' key.
         // (it should default to the first one).
         $config = Config::fromYaml($path . '/no_default_environment_key.yml');
-        $this->assertEquals('production', $config->getDefaultEnvironment());
+        $this->assertSame('production', $config->getDefaultEnvironment());
 
         // test using environment variable PHINX_ENVIRONMENT
         // (it should return the configuration specified in the environment)
         putenv('PHINX_ENVIRONMENT=externally-specified-environment');
         $config = Config::fromYaml($path . '/no_default_environment_key.yml');
-        $this->assertEquals('externally-specified-environment', $config->getDefaultEnvironment());
+        $this->assertSame('externally-specified-environment', $config->getDefaultEnvironment());
         putenv('PHINX_ENVIRONMENT=');
     }
 }

@@ -19,9 +19,9 @@ class NamespaceAwareTraitTest extends TestCase
         /** @var \Phinx\Config\NamespaceAwareTrait $config */
         $this->assertNull($config->getMigrationNamespaceByPath(__DIR__ . '/_files'));
         $this->assertNull($config->getMigrationNamespaceByPath(__DIR__ . '/_rootDirectories/../_files'));
-        $this->assertEquals('Baz', $config->getMigrationNamespaceByPath(__DIR__ . '/_rootDirectories/OnlyPhp'));
-        $this->assertEquals('Foo\Bar', $config->getMigrationNamespaceByPath(__DIR__ . '/_rootDirectories/all'));
-        $this->assertEquals('Foo\Bar', $config->getMigrationNamespaceByPath(__DIR__ . '/_rootDirectories/OnlyPhp/../all'));
+        $this->assertSame('Baz', $config->getMigrationNamespaceByPath(__DIR__ . '/_rootDirectories/OnlyPhp'));
+        $this->assertSame('Foo\Bar', $config->getMigrationNamespaceByPath(__DIR__ . '/_rootDirectories/all'));
+        $this->assertSame('Foo\Bar', $config->getMigrationNamespaceByPath(__DIR__ . '/_rootDirectories/OnlyPhp/../all'));
     }
 
     public function testGetSeedNamespaceByPath()
@@ -37,8 +37,8 @@ class NamespaceAwareTraitTest extends TestCase
         /** @var \Phinx\Config\NamespaceAwareTrait $config */
         $this->assertNull($config->getSeedNamespaceByPath(__DIR__ . '/_files'));
         $this->assertNull($config->getSeedNamespaceByPath(__DIR__ . '/_rootDirectories/../_files'));
-        $this->assertEquals('Baz', $config->getSeedNamespaceByPath(__DIR__ . '/_rootDirectories/OnlyPhp'));
-        $this->assertEquals('Foo\Bar', $config->getSeedNamespaceByPath(__DIR__ . '/_rootDirectories/all'));
-        $this->assertEquals('Foo\Bar', $config->getSeedNamespaceByPath(__DIR__ . '/_rootDirectories/OnlyPhp/../all'));
+        $this->assertSame('Baz', $config->getSeedNamespaceByPath(__DIR__ . '/_rootDirectories/OnlyPhp'));
+        $this->assertSame('Foo\Bar', $config->getSeedNamespaceByPath(__DIR__ . '/_rootDirectories/all'));
+        $this->assertSame('Foo\Bar', $config->getSeedNamespaceByPath(__DIR__ . '/_rootDirectories/OnlyPhp/../all'));
     }
 }

@@ -52,7 +52,7 @@ class PdoAdapterTest extends TestCase
     {
         $options = $this->adapter->getOptions();
         $this->assertArrayHasKey('foo', $options);
-        $this->assertEquals('bar', $options['foo']);
+        $this->assertSame('bar', $options['foo']);
     }
 
     public function testOptionsSetConnection()
@@ -67,16 +67,16 @@ class PdoAdapterTest extends TestCase
 
     public function testOptionsSetSchemaTableName()
     {
-        $this->assertEquals('phinxlog', $this->adapter->getSchemaTableName());
+        $this->assertSame('phinxlog', $this->adapter->getSchemaTableName());
         $this->adapter->setOptions(['default_migration_table' => 'schema_table_test']);
-        $this->assertEquals('schema_table_test', $this->adapter->getSchemaTableName());
+        $this->assertSame('schema_table_test', $this->adapter->getSchemaTableName());
     }
 
     public function testSchemaTableName()
     {
-        $this->assertEquals('phinxlog', $this->adapter->getSchemaTableName());
+        $this->assertSame('phinxlog', $this->adapter->getSchemaTableName());
         $this->adapter->setSchemaTableName('schema_table_test');
-        $this->assertEquals('schema_table_test', $this->adapter->getSchemaTableName());
+        $this->assertSame('schema_table_test', $this->adapter->getSchemaTableName());
     }
 
     /**
@@ -131,7 +131,7 @@ class PdoAdapterTest extends TestCase
             ],
         ];
 
-        $this->assertEquals($expected, $adapter->getVersionLog());
+        $this->assertSame($expected, $adapter->getVersionLog());
     }
 
     public function getVersionLogDataProvider()
@@ -188,7 +188,7 @@ class PdoAdapterTest extends TestCase
             ->with("SELECT * FROM '$schemaTableName' ORDER BY version ASC")
             ->will($this->throwException(new PDOException()));
 
-        $this->assertEquals([], $adapter->getVersionLog());
+        $this->assertSame([], $adapter->getVersionLog());
     }
 
     /**

@@ -28,7 +28,7 @@ class ConfigSeedPathsTest extends AbstractConfigTest
     public function testGetSeedPaths()
     {
         $config = new Config($this->getConfigArray());
-        $this->assertEquals($this->getSeedPaths(), $config->getSeedPaths());
+        $this->assertSame($this->getSeedPaths(), $config->getSeedPaths());
     }
 
     public function testGetSeedPathConvertsStringToArray()

@@ -369,7 +369,7 @@ class CreateTest extends TestCase
 
         $commandLine = array_merge(['command' => $command->getName()], $commandLine);
         $res = $commandTester->execute($commandLine);
-        $this->assertEquals(0, $res);
+        $this->assertSame(0, $res);
     }
 
     public function provideSimpleTemplateGenerator()

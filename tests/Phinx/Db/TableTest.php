@@ -84,7 +84,7 @@ class TableTest extends TestCase
         $adapter = new MysqlAdapter([]);
         $table = new \Phinx\Db\Table('ntable', ['comment' => 'test comment'], $adapter);
         $options = $table->getOptions();
-        $this->assertEquals('test comment', $options['comment']);
+        $this->assertSame('test comment', $options['comment']);
     }
 
     public function testAddIndexWithIndexObject()
@@ -122,16 +122,16 @@ class TableTest extends TestCase
             $columns[] = $action->getColumn();
         }
 
-        $this->assertEquals($expectedCreatedAtColumnName, $columns[0]->getName());
-        $this->assertEquals('timestamp', $columns[0]->getType());
-        $this->assertEquals('CURRENT_TIMESTAMP', $columns[0]->getDefault());
-        $this->assertEquals($withTimezone, $columns[0]->getTimezone());
-        $this->assertEquals('', $columns[0]->getUpdate());
+        $this->assertSame($expectedCreatedAtColumnName, $columns[0]->getName());
+        $this->assertSame('timestamp', $columns[0]->getType());
+        $this->assertSame('CURRENT_TIMESTAMP', $columns[0]->getDefault());
+        $this->assertSame($withTimezone, $columns[0]->getTimezone());
+        $this->assertSame('', $columns[0]->getUpdate());
 
-        $this->assertEquals($expectedUpdatedAtColumnName, $columns[1]->getName());
-        $this->assertEquals('timestamp', $columns[1]->getType());
-        $this->assertEquals($withTimezone, $columns[1]->getTimezone());
-        $this->assertEquals('CURRENT_TIMESTAMP', $columns[1]->getUpdate());
+        $this->assertSame($expectedUpdatedAtColumnName, $columns[1]->getName());
+        $this->assertSame('timestamp', $columns[1]->getType());
+        $this->assertSame($withTimezone, $columns[1]->getTimezone());
+        $this->assertSame('CURRENT_TIMESTAMP', $columns[1]->getUpdate());
         $this->assertTrue($columns[1]->isNull());
         $this->assertNull($columns[1]->getDefault());
     }
@@ -158,16 +158,16 @@ class TableTest extends TestCase
             $columns[] = $action->getColumn();
         }
 
-        $this->assertEquals($expectedCreatedAtColumnName, $columns[0]->getName());
-        $this->assertEquals('timestamp', $columns[0]->getType());
-        $this->assertEquals('CURRENT_TIMESTAMP', $columns[0]->getDefault());
+        $this->assertSame($expectedCreatedAtColumnName, $columns[0]->getName());
+        $this->assertSame('timestamp', $columns[0]->getType());
+        $this->assertSame('CURRENT_TIMESTAMP', $columns[0]->getDefault());
         $this->assertTrue($columns[0]->getTimezone());
-        $this->assertEquals('', $columns[0]->getUpdate());
+        $this->assertSame('', $columns[0]->getUpdate());
 
-        $this->assertEquals($expectedUpdatedAtColumnName, $columns[1]->getName());
-        $this->assertEquals('timestamp', $columns[1]->getType());
+        $this->assertSame($expectedUpdatedAtColumnName, $columns[1]->getName());
+        $this->assertSame('timestamp', $columns[1]->getType());
         $this->assertTrue($columns[1]->getTimezone());
-        $this->assertEquals('CURRENT_TIMESTAMP', $columns[1]->getUpdate());
+        $this->assertSame('CURRENT_TIMESTAMP', $columns[1]->getUpdate());
         $this->assertTrue($columns[1]->isNull());
         $this->assertNull($columns[1]->getDefault());
     }
@@ -186,7 +186,7 @@ class TableTest extends TestCase
         $expectedData = [
             $data,
         ];
-        $this->assertEquals($expectedData, $table->getData());
+        $this->assertSame($expectedData, $table->getData());
     }
 
     public function testInsertMultipleRowsWithoutZeroKey()
@@ -207,7 +207,7 @@ class TableTest extends TestCase
         ];
         $table->insert($data);
         $expectedData = array_values($data);
-        $this->assertEquals($expectedData, $table->getData());
+        $this->assertSame($expectedData, $table->getData());
     }
 
     public function testInsertSaveEmptyData()
@@ -297,7 +297,7 @@ class TableTest extends TestCase
         $columns = ["column1"];
         $data = [["value1"]];
         $table->insert($columns, $data)->save();
-        $this->assertEquals([], $table->getData());
+        $this->assertSame([], $table->getData());
     }
 
     public function testPendingAfterAddingData()
@@ -341,7 +341,7 @@ class TableTest extends TestCase
 
         $table = new \Phinx\Db\Table('ntable', [], $adapterStub);
 
-        $this->assertEquals($column1, $table->getColumn('column1'));
+        $this->assertSame($column1, $table->getColumn('column1'));
         $this->assertNull($table->getColumn('column2'));
     }
 
@@ -364,7 +364,7 @@ class TableTest extends TestCase
             return $action->getIndex();
         }, $this->getPendingActions($table));
 
-        $this->assertEquals([$index], $indexes);
+        $this->assertSame([$index], $indexes);
     }
 
     public function removeIndexDataprovider()

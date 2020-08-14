@@ -28,7 +28,7 @@ class ConfigMigrationPathsTest extends AbstractConfigTest
     public function testGetMigrationPaths()
     {
         $config = new Config($this->getConfigArray());
-        $this->assertEquals($this->getMigrationPaths(), $config->getMigrationPaths());
+        $this->assertSame($this->getMigrationPaths(), $config->getMigrationPaths());
     }
 
     public function testGetMigrationPathConvertsStringToArray()

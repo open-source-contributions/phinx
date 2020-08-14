@@ -58,7 +58,7 @@ class ConfigTest extends AbstractConfigTest
     {
         $config = new Config($this->getConfigArray());
         $db = $config->getEnvironment('testing');
-        $this->assertEquals('sqllite', $db['adapter']);
+        $this->assertSame('sqllite', $db['adapter']);
     }
 
     /**
@@ -99,7 +99,7 @@ class ConfigTest extends AbstractConfigTest
         $configArray = $this->getConfigArray();
         $configArray['environments']['default_database'] = 'production';
         $config = new Config($configArray);
-        $this->assertEquals('production', $config->getDefaultEnvironment());
+        $this->assertSame('production', $config->getDefaultEnvironment());
     }
 
     /**
@@ -112,7 +112,7 @@ class ConfigTest extends AbstractConfigTest
     {
         $config = new Config([]);
         $config['foo'] = 'bar';
-        $this->assertEquals('bar', $config['foo']);
+        $this->assertSame('bar', $config['foo']);
         $this->assertArrayHasKey('foo', $config);
         unset($config['foo']);
         $this->assertArrayNotHasKey('foo', $config);
@@ -137,7 +137,7 @@ class ConfigTest extends AbstractConfigTest
     public function testGetMigrationBaseClassNameGetsDefaultBaseClass()
     {
         $config = new Config([]);
-        $this->assertEquals('AbstractMigration', $config->getMigrationBaseClassName());
+        $this->assertSame('AbstractMigration', $config->getMigrationBaseClassName());
     }
 
     /**
@@ -146,7 +146,7 @@ class ConfigTest extends AbstractConfigTest
     public function testGetMigrationBaseClassNameGetsDefaultBaseClassWithNamespace()
     {
         $config = new Config([]);
-        $this->assertEquals('Phinx\Migration\AbstractMigration', $config->getMigrationBaseClassName(false));
+        $this->assertSame('Phinx\Migration\AbstractMigration', $config->getMigrationBaseClassName(false));
     }
 
     /**
@@ -155,7 +155,7 @@ class ConfigTest extends AbstractConfigTest
     public function testGetMigrationBaseClassNameGetsAlternativeBaseClass()
     {
         $config = new Config(['migration_base_class' => 'Phinx\Migration\AlternativeAbstractMigration']);
-        $this->assertEquals('AlternativeAbstractMigration', $config->getMigrationBaseClassName());
+        $this->assertSame('AlternativeAbstractMigration', $config->getMigrationBaseClassName());
     }
 
     /**
@@ -164,7 +164,7 @@ class ConfigTest extends AbstractConfigTest
     public function testGetMigrationBaseClassNameGetsAlternativeBaseClassWithNamespace()
     {
         $config = new Config(['migration_base_class' => 'Phinx\Migration\AlternativeAbstractMigration']);
-        $this->assertEquals('Phinx\Migration\AlternativeAbstractMigration', $config->getMigrationBaseClassName(false));
+        $this->assertSame('Phinx\Migration\AlternativeAbstractMigration', $config->getMigrationBaseClassName(false));
     }
 
     /**
@@ -199,16 +199,16 @@ class ConfigTest extends AbstractConfigTest
     public function testGetAliasValidAliasRequest()
     {
         $config = new \Phinx\Config\Config(['aliases' => ['Short' => 'Some\Long\Classname']]);
-        $this->assertEquals('Some\Long\Classname', $config->getAlias('Short'));
+        $this->assertSame('Some\Long\Classname', $config->getAlias('Short'));
     }
 
     public function testGetSeedPath()
     {
         $config = new \Phinx\Config\Config(['paths' => ['seeds' => 'db/seeds']]);
-        $this->assertEquals(['db/seeds'], $config->getSeedPaths());
+        $this->assertSame(['db/seeds'], $config->getSeedPaths());
 
         $config = new \Phinx\Config\Config(['paths' => ['seeds' => ['db/seeds1', 'db/seeds2']]]);
-        $this->assertEquals(['db/seeds1', 'db/seeds2'], $config->getSeedPaths());
+        $this->assertSame(['db/seeds1', 'db/seeds2'], $config->getSeedPaths());
     }
 
     /**
@@ -233,7 +233,7 @@ class ConfigTest extends AbstractConfigTest
     public function testGetMigrationBaseClassNameNoNamespace()
     {
         $config = new Config(['migration_base_class' => 'BaseMigration']);
-        $this->assertEquals('BaseMigration', $config->getMigrationBaseClassName());
+        $this->assertSame('BaseMigration', $config->getMigrationBaseClassName());
     }
 
     /**
@@ -245,7 +245,7 @@ class ConfigTest extends AbstractConfigTest
     public function testGetMigrationBaseClassNameNoNamespaceNoDrop()
     {
         $config = new Config(['migration_base_class' => 'BaseMigration']);
-        $this->assertEquals('BaseMigration', $config->getMigrationBaseClassName(false));
+        $this->assertSame('BaseMigration', $config->getMigrationBaseClassName(false));
     }
 
     /**
@@ -255,7 +255,7 @@ class ConfigTest extends AbstractConfigTest
     {
         $config = new \Phinx\Config\Config([]);
         $config['version_order'] = \Phinx\Config\Config::VERSION_ORDER_EXECUTION_TIME;
-        $this->assertEquals(\Phinx\Config\Config::VERSION_ORDER_EXECUTION_TIME, $config->getVersionOrder());
+        $this->assertSame(\Phinx\Config\Config::VERSION_ORDER_EXECUTION_TIME, $config->getVersionOrder());
     }
 
     /**
@@ -274,7 +274,7 @@ class ConfigTest extends AbstractConfigTest
             ->method('getVersionOrder')
             ->will($this->returnValue($versionOrder));
 
-        $this->assertEquals($expected, $configStub->isVersionOrderCreationTime());
+        $this->assertSame($expected, $configStub->isVersionOrderCreationTime());
     }
 
     /**

@@ -48,7 +48,7 @@ class DataDomainTest extends TestCase
         $mysql_adapter = new MysqlAdapter(['data_domain' => $data_domain]);
         $dd = $mysql_adapter->getDataDomain();
 
-        $this->assertEquals($data_domain['phone_number']['type'], $dd['phone_number']['type']);
+        $this->assertSame($data_domain['phone_number']['type'], $dd['phone_number']['type']);
     }
 
     public function testReplacesLengthForLimit()
@@ -64,7 +64,7 @@ class DataDomainTest extends TestCase
         $dd = $mysql_adapter->getDataDomain();
 
         $this->assertIsArray($dd['phone_number']['options']);
-        $this->assertEquals(19, $dd['phone_number']['options']['limit']);
+        $this->assertSame(19, $dd['phone_number']['options']['limit']);
     }
 
     public function testConvertsToMysqlLimit()
@@ -79,7 +79,7 @@ class DataDomainTest extends TestCase
         $mysql_adapter = new MysqlAdapter(['data_domain' => $data_domain]);
         $dd = $mysql_adapter->getDataDomain();
 
-        $this->assertEquals(MysqlAdapter::INT_BIG, $dd['prime']['options']['limit']);
+        $this->assertSame(MysqlAdapter::INT_BIG, $dd['prime']['options']['limit']);
     }
 
     public function testCreatesTypeFromPhinxConstant()
@@ -94,8 +94,8 @@ class DataDomainTest extends TestCase
         $mysql_adapter = new MysqlAdapter(['data_domain' => $data_domain]);
         $dd = $mysql_adapter->getDataDomain();
 
-        $this->assertEquals(MysqlAdapter::PHINX_TYPE_INTEGER, $dd['prime']['type']);
-        $this->assertEquals(MysqlAdapter::INT_BIG, $dd['prime']['options']['limit']);
+        $this->assertSame(MysqlAdapter::PHINX_TYPE_INTEGER, $dd['prime']['type']);
+        $this->assertSame(MysqlAdapter::INT_BIG, $dd['prime']['options']['limit']);
     }
 
     public function testThrowsErrorForInvalidMysqlLimit()
@@ -124,8 +124,8 @@ class DataDomainTest extends TestCase
         $adapter = new MysqlAdapter(['data_domain' => $data_domain]);
         $column = $adapter->getColumnForType('phone', 'phone_number', []);
 
-        $this->assertEquals('string', $column->getType());
-        $this->assertEquals(19, $column->getLimit());
+        $this->assertSame('string', $column->getType());
+        $this->assertSame(19, $column->getLimit());
     }
 
     public function testLocalOptionsOverridesDataDomainOptions()
@@ -140,7 +140,7 @@ class DataDomainTest extends TestCase
         $adapter = new MysqlAdapter(['data_domain' => $data_domain]);
         $column = $adapter->getColumnForType('phone', 'phone_number', ['length' => 30]);
 
-        $this->assertEquals('string', $column->getType());
-        $this->assertEquals(30, $column->getLimit());
+        $this->assertSame('string', $column->getType());
+        $this->assertSame(30, $column->getLimit());
     }
 }

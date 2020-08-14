@@ -170,7 +170,7 @@ class ManagerTest extends TestCase
         $this->manager->setEnvironments(['mockenv' => $envStub]);
         $this->manager->getOutput()->setDecorated(false);
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => false, 'hasDownMigration' => false], $return);
+        $this->assertSame(['hasMissingMigration' => false, 'hasDownMigration' => false], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -212,7 +212,7 @@ class ManagerTest extends TestCase
         $this->assertSame(['hasMissingMigration' => false, 'hasDownMigration' => false], $return);
         rewind($this->manager->getOutput()->getStream());
         $outputStr = trim(stream_get_contents($this->manager->getOutput()->getStream()));
-        $this->assertEquals('{"pending_count":0,"missing_count":0,"total_count":2,"migrations":[{"migration_status":"up","migration_id":"20120111235330","migration_name":"TestMigration"},{"migration_status":"up","migration_id":"20120116183504","migration_name":"TestMigration2"}]}', $outputStr);
+        $this->assertSame('{"pending_count":0,"missing_count":0,"total_count":2,"migrations":[{"migration_status":"up","migration_id":"20120111235330","migration_name":"TestMigration"},{"migration_status":"up","migration_id":"20120116183504","migration_name":"TestMigration2"}]}', $outputStr);
     }
 
     public function testPrintStatusMethodWithNamespace()
@@ -248,7 +248,7 @@ class ManagerTest extends TestCase
         $this->manager->getOutput()->setDecorated(false);
         $this->manager->setConfig($this->getConfigWithNamespace());
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => false, 'hasDownMigration' => false], $return);
+        $this->assertSame(['hasMissingMigration' => false, 'hasDownMigration' => false], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -321,7 +321,7 @@ class ManagerTest extends TestCase
         $this->manager->getOutput()->setDecorated(false);
         $this->manager->setConfig($this->getConfigWithMixedNamespace());
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => false, 'hasDownMigration' => false], $return);
+        $this->assertSame(['hasMissingMigration' => false, 'hasDownMigration' => false], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -365,7 +365,7 @@ class ManagerTest extends TestCase
         $this->manager->setEnvironments(['mockenv' => $envStub]);
         $this->manager->getOutput()->setDecorated(false);
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => false, 'hasDownMigration' => false], $return);
+        $this->assertSame(['hasMissingMigration' => false, 'hasDownMigration' => false], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -388,7 +388,7 @@ class ManagerTest extends TestCase
         $this->manager->setEnvironments(['mockenv' => $envStub]);
         $this->manager->getOutput()->setDecorated(false);
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => false, 'hasDownMigration' => false], $return);
+        $this->assertSame(['hasMissingMigration' => false, 'hasDownMigration' => false], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -427,7 +427,7 @@ class ManagerTest extends TestCase
         $this->manager->setEnvironments(['mockenv' => $envStub]);
         $this->manager->getOutput()->setDecorated(false);
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
+        $this->assertSame(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -472,7 +472,7 @@ class ManagerTest extends TestCase
         $this->manager->getOutput()->setDecorated(false);
         $this->manager->setConfig($this->getConfigWithNamespace());
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
+        $this->assertSame(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -517,7 +517,7 @@ class ManagerTest extends TestCase
         $this->manager->getOutput()->setDecorated(false);
         $this->manager->setConfig($this->getConfigWithMixedNamespace());
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
+        $this->assertSame(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -573,7 +573,7 @@ class ManagerTest extends TestCase
         $this->manager->setEnvironments(['mockenv' => $envStub]);
         $this->manager->getOutput()->setDecorated(false);
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => true, 'hasDownMigration' => false], $return);
+        $this->assertSame(['hasMissingMigration' => true, 'hasDownMigration' => false], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -625,7 +625,7 @@ class ManagerTest extends TestCase
         $this->manager->getOutput()->setDecorated(false);
         $this->manager->setConfig($this->getConfigWithNamespace());
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => true, 'hasDownMigration' => false], $return);
+        $this->assertSame(['hasMissingMigration' => true, 'hasDownMigration' => false], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -709,7 +709,7 @@ class ManagerTest extends TestCase
         $this->manager->getOutput()->setDecorated(false);
         $this->manager->setConfig($this->getConfigWithMixedNamespace());
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => true, 'hasDownMigration' => false], $return);
+        $this->assertSame(['hasMissingMigration' => true, 'hasDownMigration' => false], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -759,7 +759,7 @@ class ManagerTest extends TestCase
         $this->manager->setEnvironments(['mockenv' => $envStub]);
         $this->manager->getOutput()->setDecorated(false);
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
+        $this->assertSame(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -788,7 +788,7 @@ class ManagerTest extends TestCase
         $this->manager->setEnvironments(['mockenv' => $envStub]);
         $this->manager->getOutput()->setDecorated(false);
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => false, 'hasDownMigration' => true], $return);
+        $this->assertSame(['hasMissingMigration' => false, 'hasDownMigration' => true], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -817,7 +817,7 @@ class ManagerTest extends TestCase
         $this->manager->getOutput()->setDecorated(false);
         $this->manager->setConfig($this->getConfigWithNamespace());
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => false, 'hasDownMigration' => true], $return);
+        $this->assertSame(['hasMissingMigration' => false, 'hasDownMigration' => true], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -866,7 +866,7 @@ class ManagerTest extends TestCase
         $this->manager->getOutput()->setDecorated(false);
         $this->manager->setConfig($this->getConfigWithMixedNamespace());
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => false, 'hasDownMigration' => true], $return);
+        $this->assertSame(['hasMissingMigration' => false, 'hasDownMigration' => true], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -921,7 +921,7 @@ class ManagerTest extends TestCase
         $this->manager->setEnvironments(['mockenv' => $envStub]);
         $this->manager->getOutput()->setDecorated(false);
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
+        $this->assertSame(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -963,7 +963,7 @@ class ManagerTest extends TestCase
         $this->manager->getOutput()->setDecorated(false);
         $this->manager->setConfig($this->getConfigWithNamespace());
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
+        $this->assertSame(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -1022,7 +1022,7 @@ class ManagerTest extends TestCase
         $this->manager->getOutput()->setDecorated(false);
         $this->manager->setConfig($this->getConfigWithMixedNamespace());
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
+        $this->assertSame(['hasMissingMigration' => true, 'hasDownMigration' => true], $return);
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
@@ -1061,7 +1061,7 @@ class ManagerTest extends TestCase
 
         $this->manager->setEnvironments(['mockenv' => $envStub]);
         $return = $this->manager->printStatus('mockenv');
-        $this->assertEquals(['hasMissingMigration' => false, 'hasDownMigration' => true], $return);
+        $this->assertSame(['hasMissingMigration' => false, 'hasDownMigration' => true], $return);
 
         $outputStr = $this->manager->getOutput()->fetch();
         $this->assertStringContainsString($expectedStatusHeader, $outputStr);
@@ -1286,7 +1286,7 @@ class ManagerTest extends TestCase
         rewind($this->manager->getOutput()->getStream());
         $output = stream_get_contents($this->manager->getOutput()->getStream());
         if (is_null($expectedOutput)) {
-            $this->assertEquals("No migrations to rollback" . PHP_EOL, $output);
+            $this->assertSame("No migrations to rollback" . PHP_EOL, $output);
         } else {
             if (is_string($expectedOutput)) {
                 $expectedOutput = [$expectedOutput];
@@ -1320,7 +1320,7 @@ class ManagerTest extends TestCase
         rewind($this->manager->getOutput()->getStream());
         $output = stream_get_contents($this->manager->getOutput()->getStream());
         if (is_null($expectedOutput)) {
-            $this->assertEquals("No migrations to rollback" . PHP_EOL, $output);
+            $this->assertSame("No migrations to rollback" . PHP_EOL, $output);
         } else {
             if (is_string($expectedOutput)) {
                 $expectedOutput = [$expectedOutput];
@@ -1354,7 +1354,7 @@ class ManagerTest extends TestCase
         rewind($this->manager->getOutput()->getStream());
         $output = stream_get_contents($this->manager->getOutput()->getStream());
         if (is_null($expectedOutput)) {
-            $this->assertEquals("No migrations to rollback" . PHP_EOL, $output);
+            $this->assertSame("No migrations to rollback" . PHP_EOL, $output);
         } else {
             if (is_string($expectedOutput)) {
                 $expectedOutput = [$expectedOutput];
@@ -1387,7 +1387,7 @@ class ManagerTest extends TestCase
         rewind($this->manager->getOutput()->getStream());
         $output = stream_get_contents($this->manager->getOutput()->getStream());
         if (is_null($expectedOutput)) {
-            $this->assertEquals("No migrations to rollback" . PHP_EOL, $output);
+            $this->assertSame("No migrations to rollback" . PHP_EOL, $output);
         } else {
             if (is_string($expectedOutput)) {
                 $expectedOutput = [$expectedOutput];
@@ -1421,7 +1421,7 @@ class ManagerTest extends TestCase
         rewind($this->manager->getOutput()->getStream());
         $output = stream_get_contents($this->manager->getOutput()->getStream());
         if (is_null($expectedOutput)) {
-            $this->assertEquals("No migrations to rollback" . PHP_EOL, $output);
+            $this->assertSame("No migrations to rollback" . PHP_EOL, $output);
         } else {
             if (is_string($expectedOutput)) {
                 $expectedOutput = [$expectedOutput];
@@ -1455,7 +1455,7 @@ class ManagerTest extends TestCase
         rewind($this->manager->getOutput()->getStream());
         $output = stream_get_contents($this->manager->getOutput()->getStream());
         if (is_null($expectedOutput)) {
-            $this->assertEquals("No migrations to rollback" . PHP_EOL, $output);
+            $this->assertSame("No migrations to rollback" . PHP_EOL, $output);
         } else {
             if (is_string($expectedOutput)) {
                 $expectedOutput = [$expectedOutput];
@@ -1626,7 +1626,7 @@ class ManagerTest extends TestCase
         $output = stream_get_contents($this->manager->getOutput()->getStream());
 
         if (is_null($expectedOutput)) {
-            $this->assertEquals("No migrations to rollback" . PHP_EOL, $output);
+            $this->assertSame("No migrations to rollback" . PHP_EOL, $output);
         } else {
             if (is_string($expectedOutput)) {
                 $expectedOutput = [$expectedOutput];
@@ -1668,7 +1668,7 @@ class ManagerTest extends TestCase
         $output = stream_get_contents($this->manager->getOutput()->getStream());
 
         if (is_null($expectedOutput)) {
-            $this->assertEquals("No migrations to rollback" . PHP_EOL, $output);
+            $this->assertSame("No migrations to rollback" . PHP_EOL, $output);
         } else {
             if (is_string($expectedOutput)) {
                 $expectedOutput = [$expectedOutput];
@@ -1838,7 +1838,7 @@ class ManagerTest extends TestCase
         rewind($this->manager->getOutput()->getStream());
         $output = stream_get_contents($this->manager->getOutput()->getStream());
         if (is_null($expectedOutput)) {
-            $this->assertEquals("No migrations to rollback" . PHP_EOL, $output);
+            $this->assertSame("No migrations to rollback" . PHP_EOL, $output);
         } else {
             if (is_string($expectedOutput)) {
                 $expectedOutput = [$expectedOutput];
@@ -1877,7 +1877,7 @@ class ManagerTest extends TestCase
         rewind($this->manager->getOutput()->getStream());
         $output = stream_get_contents($this->manager->getOutput()->getStream());
         if (is_null($expectedOutput)) {
-            $this->assertEquals("No migrations to rollback" . PHP_EOL, $output);
+            $this->assertSame("No migrations to rollback" . PHP_EOL, $output);
         } else {
             if (is_string($expectedOutput)) {
                 $expectedOutput = [$expectedOutput];
@@ -1916,7 +1916,7 @@ class ManagerTest extends TestCase
         rewind($this->manager->getOutput()->getStream());
         $output = stream_get_contents($this->manager->getOutput()->getStream());
         if (is_null($expectedOutput)) {
-            $this->assertEquals("No migrations to rollback" . PHP_EOL, $output);
+            $this->assertSame("No migrations to rollback" . PHP_EOL, $output);
         } else {
             if (is_string($expectedOutput)) {
                 $expectedOutput = [$expectedOutput];
@@ -5468,10 +5468,10 @@ class ManagerTest extends TestCase
         $this->assertInstanceOf('\Symfony\Component\Console\Input\InputInterface', $inputObject);
 
         foreach ($migrations as $migration) {
-            $this->assertEquals($inputObject, $migration->getInput());
+            $this->assertSame($inputObject, $migration->getInput());
         }
         foreach ($seeds as $seed) {
-            $this->assertEquals($inputObject, $seed->getInput());
+            $this->assertSame($inputObject, $seed->getInput());
         }
     }
 
@@ -5483,10 +5483,10 @@ class ManagerTest extends TestCase
         $this->assertInstanceOf('\Symfony\Component\Console\Output\OutputInterface', $outputObject);
 
         foreach ($migrations as $migration) {
-            $this->assertEquals($outputObject, $migration->getOutput());
+            $this->assertSame($outputObject, $migration->getOutput());
         }
         foreach ($seeds as $seed) {
-            $this->assertEquals($outputObject, $seed->getOutput());
+            $this->assertSame($outputObject, $seed->getOutput());
         }
     }
 
@@ -5529,7 +5529,7 @@ class ManagerTest extends TestCase
         $this->assertTrue($adapter->hasForeignKey('just_logins', ['user_id']));
         $this->assertTrue($adapter->hasTable('change_direction_test'));
         $this->assertTrue($adapter->hasColumn('change_direction_test', 'subthing'));
-        $this->assertEquals(
+        $this->assertSame(
             count($adapter->fetchAll('SELECT * FROM change_direction_test WHERE subthing IS NOT NULL')),
             2
         );
@@ -5759,8 +5759,8 @@ class ManagerTest extends TestCase
 
         // Get the versions
         $originalVersions = $this->manager->getEnvironment('production')->getVersionLog();
-        $this->assertEquals(0, reset($originalVersions)['breakpoint']);
-        $this->assertEquals(0, end($originalVersions)['breakpoint']);
+        $this->assertSame(0, reset($originalVersions)['breakpoint']);
+        $this->assertSame(0, end($originalVersions)['breakpoint']);
 
         // Wait until the second has changed.
         sleep(1);
@@ -5770,14 +5770,14 @@ class ManagerTest extends TestCase
 
         // ensure breakpoint is set
         $firstToggle = $this->manager->getEnvironment('production')->getVersionLog();
-        $this->assertEquals(0, reset($firstToggle)['breakpoint']);
-        $this->assertEquals(1, end($firstToggle)['breakpoint']);
+        $this->assertSame(0, reset($firstToggle)['breakpoint']);
+        $this->assertSame(1, end($firstToggle)['breakpoint']);
 
         // ensure no other data has changed.
         foreach ($originalVersions as $originalVersionKey => $originalVersion) {
             foreach ($originalVersion as $column => $value) {
                 if (!is_numeric($column) && $column !== 'breakpoint') {
-                    $this->assertEquals($value, $firstToggle[$originalVersionKey][$column]);
+                    $this->assertSame($value, $firstToggle[$originalVersionKey][$column]);
                 }
             }
         }
@@ -5790,14 +5790,14 @@ class ManagerTest extends TestCase
 
         // ensure breakpoint is set
         $secondToggle = $this->manager->getEnvironment('production')->getVersionLog();
-        $this->assertEquals(0, reset($secondToggle)['breakpoint']);
-        $this->assertEquals(0, end($secondToggle)['breakpoint']);
+        $this->assertSame(0, reset($secondToggle)['breakpoint']);
+        $this->assertSame(0, end($secondToggle)['breakpoint']);
 
         // ensure no other data has changed.
         foreach ($originalVersions as $originalVersionKey => $originalVersion) {
             foreach ($originalVersion as $column => $value) {
                 if (!is_numeric($column) && $column !== 'breakpoint') {
-                    $this->assertEquals($value, $secondToggle[$originalVersionKey][$column]);
+                    $this->assertSame($value, $secondToggle[$originalVersionKey][$column]);
                 }
             }
         }
@@ -5812,14 +5812,14 @@ class ManagerTest extends TestCase
 
         // ensure breakpoint is not set
         $resetVersions = $this->manager->getEnvironment('production')->getVersionLog();
-        $this->assertEquals(0, reset($resetVersions)['breakpoint']);
-        $this->assertEquals(0, end($resetVersions)['breakpoint']);
+        $this->assertSame(0, reset($resetVersions)['breakpoint']);
+        $this->assertSame(0, end($resetVersions)['breakpoint']);
 
         // ensure no other data has changed.
         foreach ($originalVersions as $originalVersionKey => $originalVersion) {
             foreach ($originalVersion as $column => $value) {
                 if (!is_numeric($column)) {
-                    $this->assertEquals($value, $resetVersions[$originalVersionKey][$column]);
+                    $this->assertSame($value, $resetVersions[$originalVersionKey][$column]);
                 }
             }
         }
@@ -5832,14 +5832,14 @@ class ManagerTest extends TestCase
 
         // ensure breakpoint is set
         $setLastVersions = $this->manager->getEnvironment('production')->getVersionLog();
-        $this->assertEquals(0, reset($setLastVersions)['breakpoint']);
-        $this->assertEquals(1, end($setLastVersions)['breakpoint']);
+        $this->assertSame(0, reset($setLastVersions)['breakpoint']);
+        $this->assertSame(1, end($setLastVersions)['breakpoint']);
 
         // ensure no other data has changed.
         foreach ($originalVersions as $originalVersionKey => $originalVersion) {
             foreach ($originalVersion as $column => $value) {
                 if (!is_numeric($column) && $column !== 'breakpoint') {
-                    $this->assertEquals($value, $setLastVersions[$originalVersionKey][$column]);
+                    $this->assertSame($value, $setLastVersions[$originalVersionKey][$column]);
                 }
             }
         }
@@ -5852,14 +5852,14 @@ class ManagerTest extends TestCase
 
         // ensure breakpoint is set
         $setFirstVersion = $this->manager->getEnvironment('production')->getVersionLog();
-        $this->assertEquals(1, reset($setFirstVersion)['breakpoint']);
-        $this->assertEquals(1, end($setFirstVersion)['breakpoint']);
+        $this->assertSame(1, reset($setFirstVersion)['breakpoint']);
+        $this->assertSame(1, end($setFirstVersion)['breakpoint']);
 
         // ensure no other data has changed.
         foreach ($originalVersions as $originalVersionKey => $originalVersion) {
             foreach ($originalVersion as $column => $value) {
                 if (!is_numeric($column) && $column !== 'breakpoint') {
-                    $this->assertEquals($value, $resetVersions[$originalVersionKey][$column]);
+                    $this->assertSame($value, $resetVersions[$originalVersionKey][$column]);
                 }
             }
         }
@@ -5872,14 +5872,14 @@ class ManagerTest extends TestCase
 
         // ensure breakpoint is set
         $unsetLastVersions = $this->manager->getEnvironment('production')->getVersionLog();
-        $this->assertEquals(1, reset($unsetLastVersions)['breakpoint']);
-        $this->assertEquals(0, end($unsetLastVersions)['breakpoint']);
+        $this->assertSame(1, reset($unsetLastVersions)['breakpoint']);
+        $this->assertSame(0, end($unsetLastVersions)['breakpoint']);
 
         // ensure no other data has changed.
         foreach ($originalVersions as $originalVersionKey => $originalVersion) {
             foreach ($originalVersion as $column => $value) {
                 if (!is_numeric($column) && $column !== 'breakpoint') {
-                    $this->assertEquals($value, $unsetLastVersions[$originalVersionKey][$column]);
+                    $this->assertSame($value, $unsetLastVersions[$originalVersionKey][$column]);
                 }
             }
         }
@@ -5892,14 +5892,14 @@ class ManagerTest extends TestCase
 
         // ensure breakpoint is set
         $unsetFirstVersion = $this->manager->getEnvironment('production')->getVersionLog();
-        $this->assertEquals(0, reset($unsetFirstVersion)['breakpoint']);
-        $this->assertEquals(0, end($unsetFirstVersion)['breakpoint']);
+        $this->assertSame(0, reset($unsetFirstVersion)['breakpoint']);
+        $this->assertSame(0, end($unsetFirstVersion)['breakpoint']);
 
         // ensure no other data has changed.
         foreach ($originalVersions as $originalVersionKey => $originalVersion) {
             foreach ($originalVersion as $column => $value) {
                 if (!is_numeric($column)) {
-                    $this->assertEquals($value, $unsetFirstVersion[$originalVersionKey][$column]);
+                    $this->assertSame($value, $unsetFirstVersion[$originalVersionKey][$column]);
                 }
             }
         }
@@ -6065,7 +6065,7 @@ class ManagerTest extends TestCase
 
         rewind($this->manager->getOutput()->getStream());
         $outputStr = stream_get_contents($this->manager->getOutput()->getStream());
-        $this->assertEquals("warning 20120133235330 is not a valid version", trim($outputStr));
+        $this->assertSame("warning 20120133235330 is not a valid version", trim($outputStr));
     }
 }
 

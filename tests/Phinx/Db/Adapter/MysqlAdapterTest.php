@@ -122,12 +122,12 @@ class MysqlAdapterTest extends TestCase
 
     public function testQuoteTableName()
     {
-        $this->assertEquals('`test_table`', $this->adapter->quoteTableName('test_table'));
+        $this->assertSame('`test_table`', $this->adapter->quoteTableName('test_table'));
     }
 
     public function testQuoteColumnName()
     {
-        $this->assertEquals('`test_column`', $this->adapter->quoteColumnName('test_column'));
+        $this->assertSame('`test_column`', $this->adapter->quoteColumnName('test_column'));
     }
 
     public function testHasTableUnderstandsSchemaNotation()
@@ -176,7 +176,7 @@ class MysqlAdapterTest extends TestCase
         ));
         $comment = $rows[0];
 
-        $this->assertEquals($tableComment, $comment['TABLE_COMMENT'], 'Dont set table comment correctly');
+        $this->assertSame($tableComment, $comment['TABLE_COMMENT'], 'Dont set table comment correctly');
     }
 
     public function testCreateTableWithForeignKeys()
@@ -204,10 +204,10 @@ class MysqlAdapterTest extends TestCase
         ));
         $foreignKey = $rows[0];
 
-        $this->assertEquals($foreignKey['TABLE_NAME'], 'ntable');
-        $this->assertEquals($foreignKey['COLUMN_NAME'], 'tag_id');
-        $this->assertEquals($foreignKey['REFERENCED_TABLE_NAME'], 'ntable_tag');
-        $this->assertEquals($foreignKey['REFERENCED_COLUMN_NAME'], 'id');
+        $this->assertSame($foreignKey['TABLE_NAME'], 'ntable');
+        $this->assertSame($foreignKey['COLUMN_NAME'], 'tag_id');
+        $this->assertSame($foreignKey['REFERENCED_TABLE_NAME'], 'ntable_tag');
+        $this->assertSame($foreignKey['REFERENCED_COLUMN_NAME'], 'id');
     }
 
     public function testCreateTableCustomIdColumn()
@@ -388,7 +388,7 @@ class MysqlAdapterTest extends TestCase
               ->save();
         $this->assertTrue($this->adapter->hasTable('ntable'));
         $row = $this->adapter->fetchRow(sprintf("SHOW TABLE STATUS WHERE Name = '%s'", 'ntable'));
-        $this->assertEquals('MyISAM', $row['Engine']);
+        $this->assertSame('MyISAM', $row['Engine']);
     }
 
     public function testCreateTableAndInheritDefaultCollation()
@@ -409,7 +409,7 @@ class MysqlAdapterTest extends TestCase
               ->save();
         $this->assertTrue($adapter->hasTable('table_with_default_collation'));
         $row = $adapter->fetchRow(sprintf("SHOW TABLE STATUS WHERE Name = '%s'", 'table_with_default_collation'));
-        $this->assertEquals('utf8_unicode_ci', $row['Collation']);
+        $this->assertSame('utf8_unicode_ci', $row['Collation']);
     }
 
     public function testCreateTableWithLatin1Collate()
@@ -419,7 +419,7 @@ class MysqlAdapterTest extends TestCase
               ->save();
         $this->assertTrue($this->adapter->hasTable('latin1_table'));
         $row = $this->adapter->fetchRow(sprintf("SHOW TABLE STATUS WHERE Name = '%s'", 'latin1_table'));
-        $this->assertEquals('latin1_general_ci', $row['Collation']);
+        $this->assertSame('latin1_general_ci', $row['Collation']);
     }
 
     public function testCreateTableWithUnsignedPK()
@@ -533,7 +533,7 @@ class MysqlAdapterTest extends TestCase
                 'table1'
             )
         );
-        $this->assertEquals('comment1', $rows[0]['TABLE_COMMENT']);
+        $this->assertSame('comment1', $rows[0]['TABLE_COMMENT']);
     }
 
     public function testChangeComment()
@@ -555,7 +555,7 @@ class MysqlAdapterTest extends TestCase
                 'table1'
             )
         );
-        $this->assertEquals('comment2', $rows[0]['TABLE_COMMENT']);
+        $this->assertSame('comment2', $rows[0]['TABLE_COMMENT']);
     }
 
     public function testDropComment()
@@ -577,7 +577,7 @@ class MysqlAdapterTest extends TestCase
                 'table1'
             )
         );
-        $this->assertEquals('', $rows[0]['TABLE_COMMENT']);
+        $this->assertSame('', $rows[0]['TABLE_COMMENT']);
     }
 
     public function testRenameTable()
@@ -603,7 +603,7 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('realname', 'string', ['after' => 'id'])
               ->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM table1');
-        $this->assertEquals('realname', $rows[1]['Field']);
+        $this->assertSame('realname', $rows[1]['Field']);
     }
 
     public function testAddColumnWithDefaultValue()
@@ -613,7 +613,7 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('default_zero', 'string', ['default' => 'test'])
               ->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM table1');
-        $this->assertEquals("test", $rows[1]['Default']);
+        $this->assertSame("test", $rows[1]['Default']);
     }
 
     public function testAddColumnWithDefaultZero()
@@ -624,7 +624,7 @@ class MysqlAdapterTest extends TestCase
               ->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM table1');
         $this->assertNotNull($rows[1]['Default']);
-        $this->assertEquals("0", $rows[1]['Default']);
+        $this->assertSame("0", $rows[1]['Default']);
     }
 
     public function testAddColumnWithDefaultEmptyString()
@@ -634,7 +634,7 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('default_empty', 'string', ['default' => ''])
               ->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM table1');
-        $this->assertEquals('', $rows[1]['Default']);
+        $this->assertSame('', $rows[1]['Default']);
     }
 
     public function testAddColumnWithDefaultBoolean()
@@ -646,8 +646,8 @@ class MysqlAdapterTest extends TestCase
               ->addColumn('default_null', 'boolean', ['default' => null, 'null' => true])
               ->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM table1');
-        $this->assertEquals('1', $rows[1]['Default']);
-        $this->assertEquals('0', $rows[2]['Default']);
+        $this->assertSame('1', $rows[1]['Default']);
+        $this->assertSame('0', $rows[2]['Default']);
         $this->assertNull($rows[3]['Default']);
     }
 
@@ -691,7 +691,7 @@ class MysqlAdapterTest extends TestCase
             $type .= '(' . $width . ')';
         }
         $type .= $extra;
-        $this->assertEquals($type, $rows[1]['Type']);
+        $this->assertSame($type, $rows[1]['Type']);
     }
 
     public function testAddDoubleColumnWithDefaultSigned()
@@ -702,7 +702,7 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('foo', 'double')
               ->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM table1');
-        $this->assertEquals('double', $rows[1]['Type']);
+        $this->assertSame('double', $rows[1]['Type']);
     }
 
     public function testAddDoubleColumnWithSignedEqualsFalse()
@@ -713,7 +713,7 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('foo', 'double', ['signed' => false])
               ->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM table1');
-        $this->assertEquals('double unsigned', $rows[1]['Type']);
+        $this->assertSame('double unsigned', $rows[1]['Type']);
     }
 
     public function testAddBooleanColumnWithSignedEqualsFalse()
@@ -726,7 +726,7 @@ class MysqlAdapterTest extends TestCase
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM table1');
 
         $type = $this->usingMysql8() ? 'tinyint' : 'tinyint(1)';
-        $this->assertEquals($type . ' unsigned', $rows[1]['Type']);
+        $this->assertSame($type . ' unsigned', $rows[1]['Type']);
     }
 
     public function testAddStringColumnWithSignedEqualsFalse()
@@ -737,7 +737,7 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('user_id', 'string', ['signed' => false])
               ->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM table1');
-        $this->assertEquals('varchar(255)', $rows[1]['Type']);
+        $this->assertSame('varchar(255)', $rows[1]['Type']);
     }
 
     public function testAddStringColumnWithCustomCollation()
@@ -749,8 +749,8 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('string_collation_default', 'string', [])->save();
         $table->addColumn('string_collation_custom', 'string', ['collation' => 'utf8mb4_unicode_ci'])->save();
         $rows = $this->adapter->fetchAll('SHOW FULL COLUMNS FROM table_custom_collation');
-        $this->assertEquals('utf8_general_ci', $rows[1]['Collation']);
-        $this->assertEquals('utf8mb4_unicode_ci', $rows[2]['Collation']);
+        $this->assertSame('utf8_general_ci', $rows[1]['Collation']);
+        $this->assertSame('utf8mb4_unicode_ci', $rows[2]['Collation']);
     }
 
     public function testRenameColumn()
@@ -775,14 +775,14 @@ class MysqlAdapterTest extends TestCase
         $this->assertTrue($this->adapter->hasColumn('t', 'column1'));
         $this->assertFalse($this->adapter->hasColumn('t', 'column2'));
         $columns = $this->adapter->fetchAll('SHOW FULL COLUMNS FROM t');
-        $this->assertEquals('comment1', $columns[1]['Comment']);
+        $this->assertSame('comment1', $columns[1]['Comment']);
 
         $table->renameColumn('column1', 'column2')->save();
 
         $this->assertFalse($this->adapter->hasColumn('t', 'column1'));
         $this->assertTrue($this->adapter->hasColumn('t', 'column2'));
         $columns = $this->adapter->fetchAll('SHOW FULL COLUMNS FROM t');
-        $this->assertEquals('comment1', $columns[1]['Comment']);
+        $this->assertSame('comment1', $columns[1]['Comment']);
     }
 
     public function testRenamingANonExistentColumn()
@@ -800,7 +800,7 @@ class MysqlAdapterTest extends TestCase
                 $e,
                 'Expected exception of type InvalidArgumentException, got ' . get_class($e)
             );
-            $this->assertEquals('The specified column doesn\'t exist: column2', $e->getMessage());
+            $this->assertSame('The specified column doesn\'t exist: column2', $e->getMessage());
         }
     }
 
@@ -832,7 +832,7 @@ class MysqlAdapterTest extends TestCase
         $table->changeColumn('column1', $newColumn1)->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM t');
         $this->assertNotNull($rows[1]['Default']);
-        $this->assertEquals("test1", $rows[1]['Default']);
+        $this->assertSame("test1", $rows[1]['Default']);
     }
 
     public function testChangeColumnDefaultToZero()
@@ -846,7 +846,7 @@ class MysqlAdapterTest extends TestCase
         $table->changeColumn('column1', $newColumn1)->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM t');
         $this->assertNotNull($rows[1]['Default']);
-        $this->assertEquals("0", $rows[1]['Default']);
+        $this->assertSame("0", $rows[1]['Default']);
     }
 
     public function testChangeColumnDefaultToNull()
@@ -869,7 +869,7 @@ class MysqlAdapterTest extends TestCase
               ->save();
         $columns = $table->getColumns();
         $sqlType = $this->adapter->getSqlType($columns[1]->getType(), $columns[1]->getLimit());
-        $this->assertEquals('longtext', $sqlType['name']);
+        $this->assertSame('longtext', $sqlType['name']);
     }
 
     public function testMediumTextColumn()
@@ -879,7 +879,7 @@ class MysqlAdapterTest extends TestCase
               ->save();
         $columns = $table->getColumns();
         $sqlType = $this->adapter->getSqlType($columns[1]->getType(), $columns[1]->getLimit());
-        $this->assertEquals('mediumtext', $sqlType['name']);
+        $this->assertSame('mediumtext', $sqlType['name']);
     }
 
     public function testTinyTextColumn()
@@ -889,7 +889,7 @@ class MysqlAdapterTest extends TestCase
               ->save();
         $columns = $table->getColumns();
         $sqlType = $this->adapter->getSqlType($columns[1]->getType(), $columns[1]->getLimit());
-        $this->assertEquals('tinytext', $sqlType['name']);
+        $this->assertSame('tinytext', $sqlType['name']);
     }
 
     public function binaryToBlobAutomaticConversionData()
@@ -995,7 +995,7 @@ class MysqlAdapterTest extends TestCase
               ->save();
         $columns = $table->getColumns();
         $sqlType = $this->adapter->getSqlType($columns[1]->getType(), $columns[1]->getLimit());
-        $this->assertEquals('bigint', $sqlType['name']);
+        $this->assertSame('bigint', $sqlType['name']);
     }
 
     public function testMediumIntegerColumn()
@@ -1005,7 +1005,7 @@ class MysqlAdapterTest extends TestCase
               ->save();
         $columns = $table->getColumns();
         $sqlType = $this->adapter->getSqlType($columns[1]->getType(), $columns[1]->getLimit());
-        $this->assertEquals('mediumint', $sqlType['name']);
+        $this->assertSame('mediumint', $sqlType['name']);
     }
 
     public function testSmallIntegerColumn()
@@ -1015,7 +1015,7 @@ class MysqlAdapterTest extends TestCase
               ->save();
         $columns = $table->getColumns();
         $sqlType = $this->adapter->getSqlType($columns[1]->getType(), $columns[1]->getLimit());
-        $this->assertEquals('smallint', $sqlType['name']);
+        $this->assertSame('smallint', $sqlType['name']);
     }
 
     public function testTinyIntegerColumn()
@@ -1025,7 +1025,7 @@ class MysqlAdapterTest extends TestCase
               ->save();
         $columns = $table->getColumns();
         $sqlType = $this->adapter->getSqlType($columns[1]->getType(), $columns[1]->getLimit());
-        $this->assertEquals('tinyint', $sqlType['name']);
+        $this->assertSame('tinyint', $sqlType['name']);
     }
 
     public function testIntegerColumnLimit()
@@ -1036,7 +1036,7 @@ class MysqlAdapterTest extends TestCase
               ->save();
         $columns = $table->getColumns();
         $sqlType = $this->adapter->getSqlType($columns[1]->getType(), $columns[1]->getLimit());
-        $this->assertEquals($this->usingMysql8() ? 11 : $limit, $sqlType['limit']);
+        $this->assertSame($this->usingMysql8() ? 11 : $limit, $sqlType['limit']);
     }
 
     public function testDatetimeColumn()
@@ -1063,7 +1063,7 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('column1', 'datetime', ['limit' => $limit])->save();
         $columns = $table->getColumns();
         $sqlType = $this->adapter->getSqlType($columns[1]->getType(), $columns[1]->getLimit());
-        $this->assertEquals($limit, $sqlType['limit']);
+        $this->assertSame($limit, $sqlType['limit']);
     }
 
     public function testTimeColumnLimit()
@@ -1077,7 +1077,7 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('column1', 'time', ['limit' => $limit])->save();
         $columns = $table->getColumns();
         $sqlType = $this->adapter->getSqlType($columns[1]->getType(), $columns[1]->getLimit());
-        $this->assertEquals($limit, $sqlType['limit']);
+        $this->assertSame($limit, $sqlType['limit']);
     }
 
     public function testTimestampColumnLimit()
@@ -1091,7 +1091,7 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('column1', 'timestamp', ['limit' => $limit])->save();
         $columns = $table->getColumns();
         $sqlType = $this->adapter->getSqlType($columns[1]->getType(), $columns[1]->getLimit());
-        $this->assertEquals($limit, $sqlType['limit']);
+        $this->assertSame($limit, $sqlType['limit']);
     }
 
     public function testTimestampInvalidLimit()
@@ -1163,23 +1163,23 @@ class MysqlAdapterTest extends TestCase
 
         $columns = $this->adapter->getColumns('t');
         $this->assertCount(2, $columns);
-        $this->assertEquals($colName, $columns[1]->getName());
-        $this->assertEquals($type, $columns[1]->getType());
+        $this->assertSame($colName, $columns[1]->getName());
+        $this->assertSame($type, $columns[1]->getType());
 
         if (isset($options['limit'])) {
-            $this->assertEquals($options['limit'], $columns[1]->getLimit());
+            $this->assertSame($options['limit'], $columns[1]->getLimit());
         }
 
         if (isset($options['values'])) {
-            $this->assertEquals($options['values'], $columns[1]->getValues());
+            $this->assertSame($options['values'], $columns[1]->getValues());
         }
 
         if (isset($options['precision'])) {
-            $this->assertEquals($options['precision'], $columns[1]->getPrecision());
+            $this->assertSame($options['precision'], $columns[1]->getPrecision());
         }
 
         if (isset($options['scale'])) {
-            $this->assertEquals($options['scale'], $columns[1]->getScale());
+            $this->assertSame($options['scale'], $columns[1]->getScale());
         }
     }
 
@@ -1193,10 +1193,10 @@ class MysqlAdapterTest extends TestCase
 
         $columns = $this->adapter->getColumns('t');
         $this->assertCount(2, $columns);
-        $this->assertEquals($colName, $columns[1]->getName());
-        $this->assertEquals($type, $columns[1]->getType());
+        $this->assertSame($colName, $columns[1]->getName());
+        $this->assertSame($type, $columns[1]->getType());
 
-        $this->assertEquals($this->usingMysql8() ? null : 10, $columns[1]->getLimit());
+        $this->assertSame($this->usingMysql8() ? null : 10, $columns[1]->getLimit());
     }
 
     public function testDescribeTable()
@@ -1208,9 +1208,9 @@ class MysqlAdapterTest extends TestCase
         $described = $this->adapter->describeTable('t');
 
         $this->assertContains($described['TABLE_TYPE'], ['VIEW', 'BASE TABLE']);
-        $this->assertEquals($described['TABLE_NAME'], 't');
-        $this->assertEquals($described['TABLE_SCHEMA'], MYSQL_DB_CONFIG['name']);
-        $this->assertEquals($described['TABLE_ROWS'], 0);
+        $this->assertSame($described['TABLE_NAME'], 't');
+        $this->assertSame($described['TABLE_SCHEMA'], MYSQL_DB_CONFIG['name']);
+        $this->assertSame($described['TABLE_ROWS'], 0);
     }
 
     public function testGetColumnsReservedTableName()
@@ -1267,7 +1267,7 @@ class MysqlAdapterTest extends TestCase
             MYSQL_DB_CONFIG['name']
         ))->fetch(\PDO::FETCH_ASSOC);
         $expected_limit = $index_data['SUB_PART'];
-        $this->assertEquals($expected_limit, 50);
+        $this->assertSame($expected_limit, 50);
     }
 
     public function testAddMultiIndexesWithLimitSpecifier()
@@ -1285,13 +1285,13 @@ class MysqlAdapterTest extends TestCase
             MYSQL_DB_CONFIG['name']
         ))->fetch(\PDO::FETCH_ASSOC);
         $expected_limit = $index_data['SUB_PART'];
-        $this->assertEquals($expected_limit, 3);
+        $this->assertSame($expected_limit, 3);
         $index_data = $this->adapter->query(sprintf(
             'SELECT SUB_PART FROM information_schema.STATISTICS WHERE TABLE_SCHEMA = "%s" AND TABLE_NAME = "table1" AND INDEX_NAME = "email" AND COLUMN_NAME = "username"',
             MYSQL_DB_CONFIG['name']
         ))->fetch(\PDO::FETCH_ASSOC);
         $expected_limit = $index_data['SUB_PART'];
-        $this->assertEquals($expected_limit, 2);
+        $this->assertSame($expected_limit, 2);
     }
 
     public function testAddSingleIndexesWithLimitSpecifier()
@@ -1309,7 +1309,7 @@ class MysqlAdapterTest extends TestCase
             MYSQL_DB_CONFIG['name']
         ))->fetch(\PDO::FETCH_ASSOC);
         $expected_limit = $index_data['SUB_PART'];
-        $this->assertEquals($expected_limit, 3);
+        $this->assertSame($expected_limit, 3);
     }
 
     public function testDropIndex()
@@ -1568,7 +1568,7 @@ class MysqlAdapterTest extends TestCase
         $columnWithComment = $rows[1];
 
         $this->assertSame('column1', $columnWithComment['COLUMN_NAME'], "Didn't set column name correctly");
-        $this->assertEquals($comment, $columnWithComment['COLUMN_COMMENT'], "Didn't set column comment correctly");
+        $this->assertSame($comment, $columnWithComment['COLUMN_COMMENT'], "Didn't set column comment correctly");
     }
 
     public function testAddGeoSpatialColumns()
@@ -1579,7 +1579,7 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('geo_geom', 'geometry')
               ->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM table1');
-        $this->assertEquals('geometry', $rows[1]['Type']);
+        $this->assertSame('geometry', $rows[1]['Type']);
     }
 
     public function testAddSetColumn()
@@ -1590,7 +1590,7 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('set_column', 'set', ['values' => ['one', 'two']])
               ->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM table1');
-        $this->assertEquals("set('one','two')", $rows[1]['Type']);
+        $this->assertSame("set('one','two')", $rows[1]['Type']);
     }
 
     public function testAddEnumColumn()
@@ -1601,7 +1601,7 @@ class MysqlAdapterTest extends TestCase
         $table->addColumn('enum_column', 'enum', ['values' => ['one', 'two']])
               ->save();
         $rows = $this->adapter->fetchAll('SHOW COLUMNS FROM table1');
-        $this->assertEquals("enum('one','two')", $rows[1]['Type']);
+        $this->assertSame("enum('one','two')", $rows[1]['Type']);
     }
 
     public function testEnumColumnValuesFilledUpFromSchema()
@@ -1615,8 +1615,8 @@ class MysqlAdapterTest extends TestCase
         $table = new \Phinx\Db\Table('table1', [], $this->adapter);
         $columns = $table->getColumns();
         $enumColumn = end($columns);
-        $this->assertEquals(AdapterInterface::PHINX_TYPE_ENUM, $enumColumn->getType());
-        $this->assertEquals(['one', 'two'], $enumColumn->getValues());
+        $this->assertSame(AdapterInterface::PHINX_TYPE_ENUM, $enumColumn->getType());
+        $this->assertSame(['one', 'two'], $enumColumn->getValues());
     }
 
     public function testEnumColumnWithNullValue()
@@ -1672,14 +1672,14 @@ class MysqlAdapterTest extends TestCase
             ->save();
 
         $rows = $this->adapter->fetchAll('SELECT * FROM table1');
-        $this->assertEquals('value1', $rows[0]['column1']);
-        $this->assertEquals('value2', $rows[1]['column1']);
-        $this->assertEquals('value3', $rows[2]['column1']);
-        $this->assertEquals(1, $rows[0]['column2']);
-        $this->assertEquals(2, $rows[1]['column2']);
-        $this->assertEquals(3, $rows[2]['column2']);
-        $this->assertEquals('test', $rows[0]['column3']);
-        $this->assertEquals('test', $rows[2]['column3']);
+        $this->assertSame('value1', $rows[0]['column1']);
+        $this->assertSame('value2', $rows[1]['column1']);
+        $this->assertSame('value3', $rows[2]['column1']);
+        $this->assertSame(1, $rows[0]['column2']);
+        $this->assertSame(2, $rows[1]['column2']);
+        $this->assertSame(3, $rows[2]['column2']);
+        $this->assertSame('test', $rows[0]['column3']);
+        $this->assertSame('test', $rows[2]['column3']);
     }
 
     public function testInsertData()
@@ -1707,14 +1707,14 @@ class MysqlAdapterTest extends TestCase
             ->save();
 
         $rows = $this->adapter->fetchAll('SELECT * FROM table1');
-        $this->assertEquals('value1', $rows[0]['column1']);
-        $this->assertEquals('value2', $rows[1]['column1']);
-        $this->assertEquals('value3', $rows[2]['column1']);
-        $this->assertEquals(1, $rows[0]['column2']);
-        $this->assertEquals(2, $rows[1]['column2']);
-        $this->assertEquals(3, $rows[2]['column2']);
-        $this->assertEquals('test', $rows[0]['column3']);
-        $this->assertEquals('foo', $rows[2]['column3']);
+        $this->assertSame('value1', $rows[0]['column1']);
+        $this->assertSame('value2', $rows[1]['column1']);
+        $this->assertSame('value3', $rows[2]['column1']);
+        $this->assertSame(1, $rows[0]['column2']);
+        $this->assertSame(2, $rows[1]['column2']);
+        $this->assertSame(3, $rows[2]['column2']);
+        $this->assertSame('test', $rows[0]['column3']);
+        $this->assertSame('foo', $rows[2]['column3']);
     }
 
     public function testDumpCreateTable()
@@ -1785,7 +1785,7 @@ OUTPUT;
         $countQuery = $this->adapter->query('SELECT COUNT(*) FROM table1');
         $this->assertTrue($countQuery->execute());
         $res = $countQuery->fetchAll();
-        $this->assertEquals(0, $res[0]['COUNT(*)']);
+        $this->assertSame(0, $res[0]['COUNT(*)']);
     }
 
     /**
@@ -1826,7 +1826,7 @@ OUTPUT;
         $countQuery = $this->adapter->query('SELECT COUNT(*) FROM table1');
         $this->assertTrue($countQuery->execute());
         $res = $countQuery->fetchAll();
-        $this->assertEquals(0, $res[0]['COUNT(*)']);
+        $this->assertSame(0, $res[0]['COUNT(*)']);
     }
 
     public function testDumpCreateTableAndThenInsert()
@@ -1903,7 +1903,7 @@ OUTPUT;
             ->values(['string_col' => 'value2', 'int_col' => 2])
             ->execute();
 
-        $this->assertEquals(2, $stm->rowCount());
+        $this->assertSame(2, $stm->rowCount());
 
         $builder = $this->adapter->getQueryBuilder();
         $stm = $builder
@@ -1912,8 +1912,8 @@ OUTPUT;
             ->where(['int_col >=' => 2])
             ->execute();
 
-        $this->assertEquals(1, $stm->rowCount());
-        $this->assertEquals(
+        $this->assertSame(1, $stm->rowCount());
+        $this->assertSame(
             ['id' => 2, 'string_col' => 'value2', 'int_col' => '2'],
             $stm->fetch('assoc')
         );
@@ -1924,7 +1924,7 @@ OUTPUT;
             ->where(['int_col <' => 2])
             ->execute();
 
-        $this->assertEquals(1, $stm->rowCount());
+        $this->assertSame(1, $stm->rowCount());
     }
 
     public function testLiteralSupport()
@@ -1936,7 +1936,7 @@ INPUT;
         $table = new \Phinx\Db\Table('test', [], $this->adapter);
         $columns = $table->getColumns();
         $this->assertCount(1, $columns);
-        $this->assertEquals(Literal::from('double'), array_pop($columns)->getType());
+        $this->assertSame(Literal::from('double'), array_pop($columns)->getType());
     }
 
     public function geometryTypeProvider()

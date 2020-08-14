@@ -19,6 +19,6 @@ class ListTest extends TestCase
         $stream = $appTester->getOutput()->getStream();
         rewind($stream);
 
-        $this->assertEquals(1, substr_count(stream_get_contents($stream), 'Phinx by CakePHP - https://phinx.org'));
+        $this->assertSame(1, substr_count(stream_get_contents($stream), 'Phinx by CakePHP - https://phinx.org'));
     }
 }

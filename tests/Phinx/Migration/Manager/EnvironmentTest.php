@@ -58,14 +58,14 @@ class EnvironmentTest extends TestCase
     public function testConstructorWorksAsExpected()
     {
         $env = new Environment('testenv', ['foo' => 'bar']);
-        $this->assertEquals('testenv', $env->getName());
+        $this->assertSame('testenv', $env->getName());
         $this->assertArrayHasKey('foo', $env->getOptions());
     }
 
     public function testSettingTheName()
     {
         $this->environment->setName('prod123');
-        $this->assertEquals('prod123', $this->environment->getName());
+        $this->assertSame('prod123', $this->environment->getName());
     }
 
     public function testSettingOptions()
@@ -97,7 +97,7 @@ class EnvironmentTest extends TestCase
         AdapterFactory::instance()->registerAdapter('pdomock', $adapter);
         $this->environment->setOptions(['connection' => new PDOMock()]);
         $options = $this->environment->getAdapter()->getOptions();
-        $this->assertEquals('pdomock', $options['adapter']);
+        $this->assertSame('pdomock', $options['adapter']);
     }
 
     public function testSetPdoAttributeToErrmodeException()
@@ -107,7 +107,7 @@ class EnvironmentTest extends TestCase
         AdapterFactory::instance()->registerAdapter('pdomock', $adapter);
         $this->environment->setOptions(['connection' => $pdoMock]);
         $options = $this->environment->getAdapter()->getOptions();
-        $this->assertEquals(\PDO::ERRMODE_EXCEPTION, $options['connection']->getAttribute(\PDO::ATTR_ERRMODE));
+        $this->assertSame(\PDO::ERRMODE_EXCEPTION, $options['connection']->getAttribute(\PDO::ATTR_ERRMODE));
     }
 
     public function testGetAdapterWithBadExistingPdoInstance()
@@ -131,10 +131,10 @@ class EnvironmentTest extends TestCase
 
     public function testSchemaName()
     {
-        $this->assertEquals('phinxlog', $this->environment->getSchemaTableName());
+        $this->assertSame('phinxlog', $this->environment->getSchemaTableName());
 
         $this->environment->setSchemaTableName('changelog');
-        $this->assertEquals('changelog', $this->environment->getSchemaTableName());
+        $this->assertSame('changelog', $this->environment->getSchemaTableName());
     }
 
     public function testCurrentVersion()
@@ -148,7 +148,7 @@ class EnvironmentTest extends TestCase
 
         $this->environment->setAdapter($stub);
 
-        $this->assertEquals('20110301080000', $this->environment->getCurrentVersion());
+        $this->assertSame('20110301080000', $this->environment->getCurrentVersion());
     }
 
     public function testExecutingAMigrationUp()

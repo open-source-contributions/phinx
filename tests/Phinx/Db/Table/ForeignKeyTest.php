@@ -22,7 +22,7 @@ class ForeignKeyTest extends TestCase
 
     public function testOnDeleteSetNullCanBeSetThroughOptions()
     {
-        $this->assertEquals(
+        $this->assertSame(
             ForeignKey::SET_NULL,
             $this->fk->setOptions(['delete' => ForeignKey::SET_NULL])->getOnDelete()
         );
@@ -42,8 +42,8 @@ class ForeignKeyTest extends TestCase
     public function testBothActionsCanBeSetThroughSetters($dirtyValue, $valueOfConstant)
     {
         $this->fk->setOnDelete($dirtyValue)->setOnUpdate($dirtyValue);
-        $this->assertEquals($valueOfConstant, $this->fk->getOnDelete());
-        $this->assertEquals($valueOfConstant, $this->fk->getOnUpdate());
+        $this->assertSame($valueOfConstant, $this->fk->getOnDelete());
+        $this->assertSame($valueOfConstant, $this->fk->getOnUpdate());
     }
 
     /**
@@ -57,8 +57,8 @@ class ForeignKeyTest extends TestCase
             'delete' => $dirtyValue,
             'update' => $dirtyValue,
         ]);
-        $this->assertEquals($valueOfConstant, $this->fk->getOnDelete());
-        $this->assertEquals($valueOfConstant, $this->fk->getOnUpdate());
+        $this->assertSame($valueOfConstant, $this->fk->getOnDelete());
+        $this->assertSame($valueOfConstant, $this->fk->getOnUpdate());
     }
 
     public function testUnknownActionsNotAllowedThroughSetter()

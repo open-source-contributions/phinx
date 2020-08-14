@@ -78,7 +78,7 @@ class TablePrefixAdapterTest extends TestCase
     public function testGetAdapterTableName()
     {
         $tableName = $this->adapter->getAdapterTableName('table');
-        $this->assertEquals('pre_table_suf', $tableName);
+        $this->assertSame('pre_table_suf', $tableName);
     }
 
     public function testHasTable()
@@ -409,10 +409,10 @@ class TablePrefixAdapterTest extends TestCase
             ->will($this->returnCallback(function ($table, $newActions) use ($action, $checkReferecedTable) {
                 $this->assertCount(1, $newActions);
                 $this->assertSame(get_class($action), get_class($newActions[0]));
-                $this->assertEquals('pre_my_test_suf', $newActions[0]->getTable()->getName());
+                $this->assertSame('pre_my_test_suf', $newActions[0]->getTable()->getName());
 
                 if ($checkReferecedTable) {
-                    $this->assertEquals(
+                    $this->assertSame(
                         'pre_another_table_suf',
                         $newActions[0]->getForeignKey()->getReferencedTable()->getName()
                     );

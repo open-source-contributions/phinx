@@ -81,7 +81,7 @@ class UtilTest extends TestCase
      */
     public function testMapFileNameToClassName(string $fileName, string $className)
     {
-        $this->assertEquals($className, Util::mapFileNameToClassName($fileName));
+        $this->assertSame($className, Util::mapFileNameToClassName($fileName));
     }
 
     public function providerValidClassName(): array
@@ -113,13 +113,13 @@ class UtilTest extends TestCase
     {
         $files = Util::glob(__DIR__ . '/_files/migrations/empty.txt');
         $this->assertCount(1, $files);
-        $this->assertEquals('empty.txt', basename($files[0]));
+        $this->assertSame('empty.txt', basename($files[0]));
 
         $files = Util::glob(__DIR__ . '/_files/migrations/*.php');
         $this->assertCount(3, $files);
-        $this->assertEquals('20120111235330_test_migration.php', basename($files[0]));
-        $this->assertEquals('20120116183504_test_migration_2.php', basename($files[1]));
-        $this->assertEquals('not_a_migration.php', basename($files[2]));
+        $this->assertSame('20120111235330_test_migration.php', basename($files[0]));
+        $this->assertSame('20120116183504_test_migration_2.php', basename($files[1]));
+        $this->assertSame('not_a_migration.php', basename($files[2]));
     }
 
     public function testGlobAll()
@@ -130,10 +130,10 @@ class UtilTest extends TestCase
         ]);
 
         $this->assertCount(4, $files);
-        $this->assertEquals('20120111235330_test_migration.php', basename($files[0]));
-        $this->assertEquals('20120116183504_test_migration_2.php', basename($files[1]));
-        $this->assertEquals('not_a_migration.php', basename($files[2]));
-        $this->assertEquals('empty.txt', basename($files[3]));
+        $this->assertSame('20120111235330_test_migration.php', basename($files[0]));
+        $this->assertSame('20120116183504_test_migration_2.php', basename($files[1]));
+        $this->assertSame('not_a_migration.php', basename($files[2]));
+        $this->assertSame('empty.txt', basename($files[3]));
     }
 
     public function testGetFiles()
@@ -145,10 +145,10 @@ class UtilTest extends TestCase
         ]);
 
         $this->assertCount(4, $files);
-        $this->assertEquals('20120111235330_test_migration.php', basename($files[0]));
-        $this->assertEquals('20120116183504_test_migration_2.php', basename($files[1]));
-        $this->assertEquals('not_a_migration.php', basename($files[2]));
-        $this->assertEquals('foobar.php', basename($files[3]));
+        $this->assertSame('20120111235330_test_migration.php', basename($files[0]));
+        $this->assertSame('20120116183504_test_migration_2.php', basename($files[1]));
+        $this->assertSame('not_a_migration.php', basename($files[2]));
+        $this->assertSame('foobar.php', basename($files[3]));
     }
 
     /**
